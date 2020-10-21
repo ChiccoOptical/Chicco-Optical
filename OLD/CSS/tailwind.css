@@ -10313,6 +10313,14 @@ video {
   font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.font-display {
+  font-family: Playfair Display;
+}
+
+.font-body {
+  font-family: DM Sans;
+}
+
 .font-hairline {
   font-weight: 100;
 }
@@ -21638,6 +21646,10 @@ video {
           animation: bounce 1s infinite;
 }
 
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+
+@import url('https://fonts.googleapis.com/css?family=DM+Sans');
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;
@@ -31364,6 +31376,14 @@ video {
 
   .sm\:font-mono {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .sm\:font-display {
+    font-family: Playfair Display;
+  }
+
+  .sm\:font-body {
+    font-family: DM Sans;
   }
 
   .sm\:font-hairline {
@@ -52354,6 +52374,14 @@ video {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .md\:font-display {
+    font-family: Playfair Display;
+  }
+
+  .md\:font-body {
+    font-family: DM Sans;
+  }
+
   .md\:font-hairline {
     font-weight: 100;
   }
@@ -73342,6 +73370,14 @@ video {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   }
 
+  .lg\:font-display {
+    font-family: Playfair Display;
+  }
+
+  .lg\:font-body {
+    font-family: DM Sans;
+  }
+
   .lg\:font-hairline {
     font-weight: 100;
   }
@@ -94328,6 +94364,14 @@ video {
 
   .xl\:font-mono {
     font-family: Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  .xl\:font-display {
+    font-family: Playfair Display;
+  }
+
+  .xl\:font-body {
+    font-family: DM Sans;
   }
 
   .xl\:font-hairline {

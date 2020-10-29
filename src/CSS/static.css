@@ -115,22 +115,6 @@
 
 /* #endregion */
 
-.footerMain {
-    width: 95%;
-    max-width: 1575px;
-}
-
-.horizontalCenter {
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.verticalCenter {
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-
 /* #region  SCROLLBAR */
 body::-webkit-scrollbar {
     width: 13px;
@@ -168,7 +152,7 @@ nav::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
 }
 
 /* LINE NAV ROW */
@@ -241,7 +225,7 @@ nav::before {
 
 .selectorSlide-enter,
 .selectorSlide-leave-to {
-    transform: translateY(-100%);
+    transform: translateY(-50%);
     opacity: 0;
 }
 
@@ -253,6 +237,108 @@ nav::before {
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
+}
+
+/* #endregion */
+
+
+.footerMain {
+    width: 95%;
+    max-width: 1575px;
+}
+
+.horizontalCenter {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.verticalCenter {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.noOutline:focus {
+    outline: none;
+}
+
+.hoverLarge{
+    transition: .2s ease;
+}
+.hoverLarge:hover{
+    transform: scale(1.1);
+}
+
+
+/* #region  PAGE TRANSITION */
+.pageTransition-enter-to,
+.pageTransition-leave {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.pageTransition-enter,
+.pageTransition-leave-to {
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.pageTransition-enter-active,
+.pageTransition-leave-active {
+    transition: all .3s ease;
+}
+/* #endregion */
+
+
+
+/* #region  Contact Form */
+#contactForm div textarea {
+    resize: none;
+}
+
+#contactForm div input[type="text"],
+#contactForm div textarea {
+    border-bottom-width: 2px;
+    transition-property: border-color;
+    transition-duration: 100ms;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+#contactForm div input[type="text"]:focus,
+#contactForm div textarea:focus {
+    border-color: #b794f4;
+}
+
+#contactForm div input[type="text"]::placeholder,
+#contactForm div textarea::placeholder {
+    color: transparent;
+}
+
+/* STANDARD */
+#contactForm div label {
+    top: 0;
+    position: absolute;
+    left: 8px;
+    font-weight: bold;
+    transition: .3s ease;
+    cursor: text;
+    color: #00000052;
+}
+
+/* DOWNSTAIRS */
+#contactForm div input[type="text"]:placeholder-shown~label,
+#contactForm div textarea:placeholder-shown~label {
+    font-size: 1.2rem;
+    top: 20px;
+}
+
+/* UPSTAIRS */
+#contactForm div input:focus~label,
+#contactForm div textarea:focus~label {
+    top: 0;
+    font-size: 1rem;
+    cursor: text;
+    color: #4d0eb98f;
 }
 
 /* #endregion */

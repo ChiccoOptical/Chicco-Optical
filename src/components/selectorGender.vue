@@ -17,3 +17,14 @@
         props:['glassesType']
     })
 </script>
+
+<style scoped>
+    a p{
+        transition: .1s ease;
+        padding-bottom: 2px;
+    }
+    a:hover p{
+        border: 0px solid #000000d5;
+        border-bottom-width: 3px;
+    }
+</style>

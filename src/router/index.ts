@@ -19,7 +19,33 @@ const routes: Array<RouteConfig> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../pages/About.vue')
-  }
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    component: () => import('../pages/Contact.vue')
+  },
+  {
+    path:'/glasses',
+    name: 'Glasses',
+    component: () => import('../pages/ProductList.vue')
+  },
+  {
+    path:'/sunglasses',
+    name:'Sunglasses',
+    component: () => import('../pages/ProductList.vue')
+  },
+  {
+    path: '/contactLenses',
+    name: 'Contact Lenses',
+    component: () => import('../pages/ProductList.vue')
+  },
+  {
+    path:'/exams',
+    name: 'Eye Exams',
+    component: () => import('../pages/Exams.vue')
+  },
+  { path: "*", component: () => import('../pages/PageNotFound.vue')}
 ]
 
 // APPLY AND EXPORT

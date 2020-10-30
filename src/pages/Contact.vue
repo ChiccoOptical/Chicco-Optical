@@ -71,7 +71,7 @@
             saveWeChat: function(){
                 const a  = document.createElement('a');
                 a.href = '../assets/wechat.jpg';
-                a.download = 'image.png';
+                a.download = 'image.jpg';
 
                 a.click()
             }

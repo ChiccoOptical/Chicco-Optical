@@ -18,7 +18,7 @@
 		<!-- ========CONTENT======== -->
 		<div style="max-width:1920px flex items-center">
 			<transition name="pageTransition" mode="out-in">
-				<router-view/>
+				<router-view :key="$route.path"/>
 			</transition>
 		</div>
 

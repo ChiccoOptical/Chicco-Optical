@@ -225,7 +225,7 @@ nav::before {
 
 .selectorSlide-enter,
 .selectorSlide-leave-to {
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
     opacity: 0;
 }
 

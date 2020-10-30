@@ -1,6 +1,9 @@
 <template>
     <div>
-        YAYA EXAMS
+        <!-- SECTION 1 -->
+        <div class="h-screen w-full bg-red-500">
+            I am into cheese
+        </div>
     </div>
 </template>
 

@@ -4,7 +4,6 @@ import App from './App.vue'
 // Feature Import
 import router from './router'
 import store from './store'
-import firestore from './firebase'
 
 //Import CSS????
 import './CSS/tailwind.css'

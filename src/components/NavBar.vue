@@ -17,8 +17,8 @@
 			<div v-if="navOpen || windowWidth > 1024" id="navLinkRow" class="col-span-2 absolute lg:relative bg-kindaWhite lg:bg-transparent w-full lg:w-auto top-s lg:top-0 flex flex-col lg:flex-row gap-y-2 lg:gap-0 py-2 lg:py-0 justify-evenly items-center text-2xl lg:text-xl">
 				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/">Home</router-link>
 				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'glasses')" @click.native="$emit('close-selector')" to="/glasses">Glasses</router-link>
-				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'contactlenses')" @click.native="$emit('close-selector')" to="/contactlenses">Contact Lenses</router-link>
 				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'sunglasses')" @click.native="$emit('close-selector')" to="/sunglasses">Sunglasses</router-link>
+				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'contactlenses')" @click.native="$emit('close-selector')" to="/contactlenses">Contact Lenses</router-link>
 				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/exams">Eye Exams</router-link>
 				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/contact">Contact Us</router-link>
 			</div>
@@ -27,6 +27,7 @@
 		<!-- END -->
 		<div class="lg:flex justify-end hidden">
 			<!-- SEARCH BOX -->
+			<!--
 			<div class="search flex justify-center items-center">
 				<input type="text" placeholder="search" class="text-xl"/>
 				<div class="symbol">
@@ -35,7 +36,7 @@
 					</svg>
 				</div>
 			</div>
-			<!-- SVG -->
+			<!- SVG ->
 			<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
 				<symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" id="lens">
 				<path d="M15.656,13.692l-3.257-3.229c2.087-3.079,1.261-7.252-1.845-9.321c-3.106-2.068-7.315-1.25-9.402,1.83
@@ -45,7 +46,9 @@
 				C4.622,10.623,2.833,8.831,2.845,6.631L2.845,6.631z" />
 				</symbol>
 			</svg>
+			-->
 			<!-- PLACE ALTERNATIVE HERE-->
+			
 		</div>
 	</nav>
 </template>

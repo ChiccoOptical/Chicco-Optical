@@ -1,3 +1,6 @@
+/* FONT */
+@import url('https://fonts.googleapis.com/css?family=Lora');
+
 /* #region  SEARCH BOX */
 .search {
     /* VARIABLES */
@@ -223,6 +226,12 @@ nav::before {
 .verticalCenter {
     top: 50%;
     transform: translateY(-50%);
+}
+
+.bothCenter{
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
 }
 
 .noOutline:focus {

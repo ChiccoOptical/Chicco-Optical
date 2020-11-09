@@ -16,13 +16,14 @@ export default Vue.extend({
             gender:this.$route.path.slice(1).split("/")[1],
             product:{
                 id:this.$route.params.id,
-                productType:this.$route.path.slice(1).split("/")[0]
+                productType:this.$route.path.slice(1).split("/")[0],
+                imageURL:'@productListing'
             } as product
         }
     },
     beforeMount(){
         const productDatabase = db.collection(['products', this.product.productType,this.gender].join('/'));
-        const doc = productDatabase.doc(this.product.id).get().then((data)=>{
+        productDatabase.doc(this.product.id).get().then((data)=>{
             this.product = data.data() as product
         })
     }

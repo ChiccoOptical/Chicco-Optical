@@ -1,7 +1,7 @@
 <template>
     <router-link :to="this.$route.path + '/' +  id">
     <div class="p-6 text-center hoverLarge cursor-pointer">
-        <img class="w-full" :src="'' + imageURL" alt="IMAGE NOT FOUND">
+        <img class="w-full" :src="imageSRC" alt="IMAGE NOT FOUND">
         <h1 class="text-4xl mt-2 font-bold">{{ title }}</h1>
         <h3>${{ halves[0] }}.<small>{{ halves[1] }}</small></h3>
     </div>
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-// import firebase from 'firebase'
+import firebase from 'firebase'
 
 export default Vue.extend({
     name:'itemCard',
@@ -30,22 +30,33 @@ export default Vue.extend({
         'id':{
             type:String,
             required:true
+        },
+        'imageURL':{
+            type:String,
+            required:true
         }
     },
     data(){
         return{
-            imageURL:""
+            imageSRC:''
         }
     },
-    created(){
+    methods:{
+        handleResult(result: string){
+            this.imageSRC = result;
+            return null;
+        },
+        getImageURL(){
+            return this.imageURL
+        }
+    },
+    mounted(){
         // GET THE DOWNLOAD URL OF THE IMAGE(Based on the product ID) and add it to productData
-        // try {
-        //     firebase.storage().ref(this.productType + "/" + this.id + ".png").getDownloadURL().then((result)=>{
-        //         this.imageURL = result;
-        //     });
-        // } catch (error) {
-        //     console.log("No Image Error");  
-        // }
+        try {
+            firebase.storage().ref(this.getImageURL()).getDownloadURL().then(result => this.handleResult(result));
+        } catch (e) {
+            console.log("No Image Error");
+        }
     },
     computed:{
         halves: function(){

@@ -17,6 +17,7 @@
                 :price="item.price"
                 :productType="item.productType"
                 :id="item.id"
+                :imageURL.sync="item.imageURL"
             ></item-card>
         </div>
     </div>
@@ -35,8 +36,9 @@
 <script lang="ts">
     import Vue from 'vue'
     import itemCard from '../components/itemCard.vue'
-    import db from '../firebase'
     import product from '../types/product'
+    import firebase from 'firebase'
+    import db from '../firebase'
 
     export default Vue.extend({
         name:'ProductList',
@@ -57,6 +59,16 @@
                         const productData = product.data() as product;
                         productData.id = product.id
                         productData.productType = this.productType
+
+
+                        productData.imageURL = productData.productType + '/' + productData.id + '.png';
+                        
+                        // FOR LATER
+                        // firebase.storage().ref(productData.productType + '/' + productData.id + '.png').getDownloadURL().then(result => {
+                        //     productData.imageURL = result 
+                        // });
+
+
                         //Add productData to productList
                         this.productList.push(productData);
                     });

@@ -90,21 +90,35 @@ const routes: Array<RouteConfig> = [
 		path:'/sunglasses',
 		name:'Sunglasses',
 		component: () => import('../pages/ProductList.vue'),
-		children: [
-		{
-			path: 'men',
-			name: 'Men Sunglasses',
-			component: () => import('../pages/ProductList.vue')
-		},
-		{
-			path: 'women',
-			name: 'Women Sunglasses',
-			component: () => import('../pages/ProductList.vue')
-		}
-		],
 		meta: {
 			title: 'Sunglasses'
 		}
+	},
+	{
+		path: '/sunglasses/men',
+		name: 'Men Sunglasses',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Mens Sunglasses'
+		}
+	},
+	{
+		path: '/sunglasses/men/:id',
+		name: 'Mens Sunglasses Product',
+		component: () => import('../pages/ProductListing.vue'),
+	},
+	{
+		path: '/sunglasses/women',
+		name: 'Women Glasses',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Womens Sunglasses'
+		}
+	},
+	{
+		path: '/sunglasses/women/:id',
+		name: 'Womens Sunglasses Product',
+		component: () => import('../pages/ProductListing.vue'),
 	},
 
 	// CONTACT LENSES
@@ -112,21 +126,35 @@ const routes: Array<RouteConfig> = [
 		path: '/contactlenses',
 		name: 'ContactLenses',
 		component: () => import('../pages/ProductList.vue'),
-		children: [
-		{
-			path: 'men',
-			name: 'Men Contact Lenses',
-			component: () => import('../pages/ProductList.vue')
-		},
-		{
-			path: 'women',
-			name: 'Women Contact Lenses',
-			component: () => import('../pages/ProductList.vue')
-		}
-		],
 		meta: {
 			title: 'Contact Lenses'
 		}
+	},
+	{
+		path: '/contactlenses/men',
+		name: 'Men Contact Lenses',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Mens Glasses'
+		}
+	},
+	{
+		path: '/contactlenses/men/:id',
+		name: 'Mens Contact Lenses Product',
+		component: () => import('../pages/ProductListing.vue'),
+	},
+	{
+		path: '/contactlenses/women',
+		name: 'Women Contact Lenses',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Womens Glasses'
+		}
+	},
+	{
+		path: '/contactlenses/women/:id',
+		name: 'Womens Contact Lenses Product',
+		component: () => import('../pages/ProductListing.vue'),
 	},
 
 	// 404 PAGE

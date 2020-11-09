@@ -1,9 +1,11 @@
 <template>
+    <router-link :to="this.$route.path + '/' +  id">
     <div class="p-6 text-center hoverLarge cursor-pointer">
         <img class="w-full" :src="'' + imageURL" alt="IMAGE NOT FOUND">
         <h1 class="text-4xl mt-2 font-bold">{{ title }}</h1>
         <h3>${{ halves[0] }}.<small>{{ halves[1] }}</small></h3>
-    </div>    
+    </div>
+    </router-link>
 </template>
 
 <script lang="ts">

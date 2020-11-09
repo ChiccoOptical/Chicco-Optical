@@ -1,12 +1,12 @@
 <template>
-    <div class="bg-orange-400">
+    <div class="bg-orange-400" v-if="gender">
         <div style="height:72px"></div>
         <div class="relative" style="height:50vh">
             <img src="../assets/glasses.png" alt="Glasses" class="h-full" style="transform: scale(0.7)">
             <div class="absolute verticalCenter flex flex-col items-end" style="right:10%;">
                 <p class="capitalize" style="line-height:100%">{{ productType }}</p>
                 <h1 class="text-6xl font-bold" style="line-height:100%">Main Text</h1>
-                <h3>Little Text</h3>    
+                <h3>{{gender}}</h3>    
             </div>
         </div>
         <div class="bg-white mx-20 p-6 pt-12 grid grid-cols-3 gap-10">
@@ -19,6 +19,16 @@
                 :id="item.id"
             ></item-card>
         </div>
+    </div>
+
+    <!-- GENDER SELECTOR ON /glasses, /contactlenses, /sunglasses -->
+    <div v-else class="h-screen w-full grid lg:grid-cols-2 grid-rows-2 lg:grid-rows-1" style="padding-top:72px">
+        <router-link :to="productType+'/men'" :class="'genderSelector'+productType+'men'" class="relative genderSelectorBackground flex justify-center items-center text-6xl font-bold text-white">
+            Mens
+        </router-link>
+        <router-link :to="productType+'/women'" :class="'genderSelector'+productType+'women'" class="relative genderSelectorBackground flex justify-center items-center text-6xl font-bold text-white">
+            Women
+        </router-link>
     </div>
 </template>
 
@@ -36,20 +46,22 @@
         data(){
             return{
                 productList:[] as product[],
-                productType:this.$route.path.slice(1)
+                productType:this.$route.path.slice(1).split("/")[0],
+                gender:this.$route.path.slice(1).split("/")[1]
             }
         },
         beforeMount(){
-            db.collection(this.productType).get().then((snapshot)=>{
-                snapshot.forEach((product) => {
-                    const productData = product.data() as product;
-                    productData.id = product.id
-                    productData.productType = this.productType
-                    //Add productData to productList
-                    this.productList.push(productData);
-                });
-            })
-            
+            if(this.gender){
+                db.collection('products' + '/' + this.productType + '/' + this.gender).get().then((snapshot)=>{
+                    snapshot.forEach((product) => {
+                        const productData = product.data() as product;
+                        productData.id = product.id
+                        productData.productType = this.productType
+                        //Add productData to productList
+                        this.productList.push(productData);
+                    });
+                })
+            }
         }
     })
 </script>

@@ -1,9 +1,9 @@
 <template>
     <footer class="w-full bg-gray-200 flex flex-col items-center">
         <!-- Main Footer -->
-        <div class="grid grid-cols-8 footerMain py-6 px-8">
+        <div class="flex flex-col lg:grid grid-cols-8 footerMain py-6 px-8">
             <!-- Pages -->
-            <div class="col-span-5 flex flex-row justify-between pr-8">
+            <div class="col-span-5 row-span-1 flex flex-col gap-y-4 lg:flex-row lg:gap-0 justify-between lg:pr-8 text-center lg:text-left mb-6 lg:mb-0">
                 <div>
                     <h1>Chicco Optical</h1>
                     <h3>Jun Liu</h3>
@@ -11,7 +11,7 @@
                 <div>
                     <h3>PRODUCTS</h3>
                     <ul>
-                        <li>Glasses</li>
+                        <li><router-link to="/glasses">Glasses</router-link></li>
                         <li>Contact Lenses</li>
                         <li>Sunglasses</li>
                     </ul>
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <!-- Need help -->
-            <div class="border-l-2 border-gray-300 col-span-3 text-center">
+            <div class="lg:border-l-2 lg:border-gray-300 col-span-3 row-span-1 text-center">
                 <h3>Need a hand?</h3>
                 <p>We’re available every day from 10a.m.–3:30p.m. ET.</p>
                 <div class="flex flex-row justify-around px-10 text-gray-700 mt-6">

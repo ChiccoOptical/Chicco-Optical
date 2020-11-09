@@ -2,12 +2,12 @@
 <template>
 	<div id="app">
 		<!-- ========NAVBAR======== -->
-		<nav-bar v-on:close-selector="closeSelector()" v-on:expand-selector="expandSelector()"></nav-bar>
+		<nav-bar v-on:close-selector="closeSelector()" v-on:expand-selector="expandSelector"></nav-bar>
 		
 		<!-- ========SELECTOR======== -->
 		<transition name="selectorSlide">
 		<div v-if="selectorOpen" :class="{popUpBig:selectorOpen}" class="popDown fixed bg-white w-full z-10" @click="closeSelector">
-			<selector-gender></selector-gender>
+			<selector-gender :glassesType="selectorType"></selector-gender>
 		</div>
 		</transition>
 		<!-- SELECTOR BLACK BACKGROUND -->
@@ -29,29 +29,33 @@
 
 <script lang="ts">
 	import Vue from 'vue'
-	import selectorGender from './components/selectorGender.vue'
 	import navBar from './components/NavBar.vue'
 	import footer from './components/Footer.vue'
 
 	export default Vue.extend({
 		name:'app',
 		components:{
-			'selector-gender' : selectorGender,
+			'selector-gender' : ()=>import(/* webpackPrefetch: true */ './components/selectorGender.vue'),
 			'nav-bar' : navBar,
 			'my-footer' : footer
 		},
 		data(){
 			return{
-				selectorOpen:false
+				selectorOpen:false,
+				selectorType:""
 			}
 		},
 		methods:{
-			expandSelector: function(	){
+			expandSelector: function(e: string){
 				this.selectorOpen = true
+				this.selectorType = e
 			},
 			closeSelector: function(){
 				this.selectorOpen = false;
 			}
+		},
+		created(){
+			console.log(this.$options)
 		}
 	})
 </script>

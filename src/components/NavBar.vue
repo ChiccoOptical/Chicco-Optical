@@ -1,23 +1,31 @@
 <template>
-	<nav class="grid grid-cols-4 p-6 py-3 fixed w-full z-20" ref="navBar">
+	<nav class="grid grid-cols-2 lg:grid-cols-4 px-2 lg:p-6 py-3 lg:py-3 fixed w-full z-20" ref="navBar">
 		<!-- START LOGO -->
 		<div class="debugBorder">
-			<img src="../assets/logo.png" alt="Logo" class="h-12">
+			<router-link to="/">
+				<img src="../assets/logo.png" alt="Logo" class="h-12">
+			</router-link>
 		</div>
 
 		<!-- MIDDLE -->
-		<div id="navLinkRow" class=" col-span-2 flex flex-row justify-evenly items-center text-xl relative">
-			<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/">Home</router-link>
-			<router-link class="noOutline" @mouseover.native="$emit('expand-selector')" to="/glasses">Glasses</router-link>
-			<router-link class="noOutline" @mouseover.native="$emit('expand-selector')" to="/contactLenses">Contact Lenses</router-link>
-			<router-link class="noOutline" @mouseover.native="$emit('expand-selector')" to="/sunglasses">Sunglasses</router-link>
-			<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/exams">Eye Exams</router-link>
-			<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/contact">Contact Us</router-link>
-			<div class="line" :class="[lineClass]"></div>
+		<div class="flex justify-end lg:hidden">
+			<svg @click="navOpen=!navOpen" class="h-12 cursor-pointer" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+			</svg>
 		</div>
+		<transition name="selectorSlide">
+			<div v-if="navOpen || windowWidth > 1024" id="navLinkRow" class="col-span-2 absolute lg:relative bg-kindaWhite lg:bg-transparent w-full lg:w-auto top-s lg:top-0 flex flex-col lg:flex-row gap-y-2 lg:gap-0 py-2 lg:py-0 justify-evenly items-center text-2xl lg:text-xl">
+				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/">Home</router-link>
+				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'glasses')" @click.native="$emit('close-selector')" to="/glasses">Glasses</router-link>
+				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'contactlenses')" @click.native="$emit('close-selector')" to="/contactlenses">Contact Lenses</router-link>
+				<router-link class="noOutline itemPage" @mouseover.native="$emit('expand-selector', 'sunglasses')" @click.native="$emit('close-selector')" to="/sunglasses">Sunglasses</router-link>
+				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/exams">Eye Exams</router-link>
+				<router-link class="noOutline" @mouseover.native="$emit('close-selector')"  to="/contact">Contact Us</router-link>
+			</div>
+		</transition>
 
 		<!-- END -->
-		<div class="flex justify-end">
+		<div class="lg:flex justify-end hidden">
 			<!-- SEARCH BOX -->
 			<div class="search flex justify-center items-center">
 				<input type="text" placeholder="search" class="text-xl"/>
@@ -55,7 +63,9 @@
 					'sunGlasses':'4',
 					'exam':'5',
 					'contact':'6'
-				}
+				},
+				navOpen:false,
+				windowWidth: window.innerWidth,
 			}
 		},
 		computed:{
@@ -64,6 +74,19 @@
 			},
 			lineClass: function(){
 				return 'origin' + String(this.pageNum[this.id]);
+			}
+		},
+		mounted() {
+			this.$nextTick(() => {
+				window.addEventListener('resize', this.onResize);
+			})
+		},
+		beforeDestroy() { 
+			window.removeEventListener('resize', this.onResize); 
+		},
+		methods: {  
+			onResize() {
+				this.windowWidth = window.innerWidth
 			}
 		}
 	})

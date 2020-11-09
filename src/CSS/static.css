@@ -155,57 +155,18 @@ nav::before {
     backdrop-filter: blur(10px);
 }
 
-/* LINE NAV ROW */
-#navLinkRow .line {
-    width: 50px;
-    height: 2px;
-    background-color: #252525;
-    position: absolute;
-    bottom: 0;
-
-    transition: .4s cubic-bezier(.65, .05, .36, 1);
+.router-link-exact-active,
+#navLinkRow a:hover {
+    color: black !important;
 }
 
-/* General Case
-#navLinkRow a:nth-child(n):hover~.line {
-    left: calc((100% / (2*var(--navBarItems))) * ( (2 * n) - 1));
-    transform: translateX(-50%);
-} */
-
-#navLinkRow a:nth-child(1):hover~.line,
-.origin1 {
-    left: 10%;
-    transform: translateX(-50%);
+#navLinkRow a {
+    color: #8b8b8b;
+    transition: color .1s ease;
 }
 
-#navLinkRow a:nth-child(2):hover~.line,
-.origin2 {
-    left: 20%;
-    transform: translateX(-50%);
-}
-
-#navLinkRow a:nth-child(3):hover~.line,
-.origin3 {
-    left: 30%;
-    transform: translateX(-50%);
-}
-
-#navLinkRow a:nth-child(4):hover~.line,
-.origin4 {
-    left: 40%;
-    transform: translateX(-50%);
-}
-
-#navLinkRow a:nth-child(5):hover~.line,
-.origin5 {
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#navLinkRow a:nth-child(6):hover~.line,
-.origin6 {
-    left: 60%;
-    transform: translateX(-50%);
+.router-link-active.itemPage {
+    color: black !important;
 }
 
 .popDown {
@@ -225,7 +186,7 @@ nav::before {
 
 .selectorSlide-enter,
 .selectorSlide-leave-to {
-    /* transform: translateY(-50%); */
+    transform: translateY(-50%);
     opacity: 0;
 }
 
@@ -252,6 +213,13 @@ nav::before {
     transform: translateX(-50%);
 }
 
+@media (min-width: 1024px) {
+    .onlyVerticalCenter {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
 .verticalCenter {
     top: 50%;
     transform: translateY(-50%);
@@ -261,10 +229,11 @@ nav::before {
     outline: none;
 }
 
-.hoverLarge{
+.hoverLarge {
     transition: .2s ease;
 }
-.hoverLarge:hover{
+
+.hoverLarge:hover {
     transform: scale(1.1);
 }
 
@@ -286,6 +255,7 @@ nav::before {
 .pageTransition-leave-active {
     transition: all .3s ease;
 }
+
 /* #endregion */
 
 
@@ -339,6 +309,44 @@ nav::before {
     font-size: 1rem;
     cursor: text;
     color: #4d0eb98f;
+}
+
+/* #endregion */
+
+
+
+/* #region  Gender Selector Background */
+
+.genderSelectorBackground::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+    filter: saturate(1) brightness(1);
+    transition: filter .3s ease;
+}
+
+.genderSelectorBackground:hover::before {
+    filter: saturate(0) brightness(.7);
+}
+
+.genderSelectorglassesmen::before {
+    background-image: url("https://www.opticalexpress.co.uk/media/1064/man-with-glasses-smiling-looking-into-distance.jpg");
+}
+
+.genderSelectorglasseswomen::before {
+    background-image: url("https://i.pinimg.com/originals/be/f5/e8/bef5e818dc7b3bf0b460c14c80c31238.jpg");
+}
+
+.genderSelectorsunglassesmen::before {
+    background-image: url("https://www.rankandstyle.com/media/lists/m/mens-sunglasses_0Em6i7u.jpg");
+}
+
+.genderSelectorsunglasseswomen::before {
+    background-image: url("https://img.alicdn.com/imgextra/i1/685741170/TB22TuWuL5TBuNjSspcXXbnGFXa_!!685741170.jpg");
 }
 
 /* #endregion */

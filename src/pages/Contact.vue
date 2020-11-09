@@ -2,7 +2,7 @@
     <div>
         <div style="height:72px"></div>
         <div
-            class="grid grid-cols-3 gap-6 px-10 items-center"
+            class="grid lg:grid-cols-3 grid-rows-2 lg:grid-rows-1 gap-6 px-10 items-center"
             style="
                 height:calc(100vh - 72px);
                 background-size:cover;

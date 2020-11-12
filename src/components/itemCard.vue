@@ -1,71 +1,42 @@
 <template>
-    <router-link :to="this.$route.path + '/' +  id">
-    <div class="p-6 text-center hoverLarge cursor-pointer">
-        <img class="w-full" :src="imageSRC" alt="IMAGE NOT FOUND">
-        <h1 class="text-4xl mt-2 font-bold">{{ title }}</h1>
-        <h3>${{ halves[0] }}.<small>{{ halves[1] }}</small></h3>
+    <router-link :to="this.$route.path + '/' +  product.id">
+    <div class="p-6 text-center cursor-pointer relative">
+        <!-- PRODUCT -->
+        <img class="w-full" :src="product.imageURL" alt="IMAGE NOT FOUND" style="z-index:1">
+
+        <!-- BRAND BACKGROUND -->
+        <img id="brand" class="absolute opacity-25 top-0 right-0 w-3/5" :src="resolveBrandImage(product.brand)" alt="">
+
+        <!-- TITLE -->
+        <h1 class="text-4xl mt-2 font-bold">{{ product.title }}</h1>
+        <div class="flex flex-row gap-x-3 justify-center mt-3">
+            <div id="colorPods" :class="{active:colorIndex==3}" class="h-5 w-5 rounded-full overflow-hidden flex flex-row relative" v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
+                <div class="h-full w-1/2" :style="'background-color:' + translateFrameColour(product.frameColours[colorIndex])"></div>
+                <div class="h-full w-1/2" :style="'background-color:' + translateLensColour(product.lensColours[colorIndex])"></div>
+            </div>
+        </div>
     </div>
     </router-link>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import firebase from 'firebase'
+import mixins from 'vue-typed-mixins'
+import resolveBrandImage from '@/mixins/resolveBrandImage'
+import translateColours from'@/mixins/translateColours'
 
-export default Vue.extend({
+export default mixins(resolveBrandImage, translateColours).extend({
     name:'itemCard',
     props:{
-        'title':{
-            type:String,
+        'product':{
+            type:Object,
             required:true
-        },
-        'price':{
-            type:Number,
-            required:true
-        },
-        'productType':{
-            type:String,
-            required:true
-        },
-        'id':{
-            type:String,
-            required:true
-        },
-        'imageURL':{
-            type:String,
-            required:true
-        }
-    },
-    data(){
-        return{
-            imageSRC:''
-        }
-    },
-    methods:{
-        handleResult(result: string){
-            this.imageSRC = result;
-            return null;
-        },
-        getImageURL(){
-            return this.imageURL
-        }
-    },
-    mounted(){
-        // GET THE DOWNLOAD URL OF THE IMAGE(Based on the product ID) and add it to productData
-        try {
-            firebase.storage().ref(this.getImageURL()).getDownloadURL().then(result => this.handleResult(result));
-        } catch (e) {
-            console.log("No Image Error");
-        }
-    },
-    computed:{
-        halves: function(){
-            return String(this.price).split('.')
         }
     }
 })
 </script>
 
 <style scoped>
-
+    #colorPods.active{
+        transform: scale(1.3);
+    }
 </style>

@@ -11,9 +11,10 @@
                 <div>
                     <h3>PRODUCTS</h3>
                     <ul>
-                        <li><router-link to="/glasses">Glasses</router-link></li>
-                        <li>Contact Lenses</li>
-                        <li>Sunglasses</li>
+                        <li><router-link to="/frames">Frames</router-link></li>
+                        <li><router-link to="/lenses">Lenses</router-link></li>
+                        <li><router-link to="/contactlenses">Contact Lenses</router-link></li>
+                        <li><router-link to="/sunglasses">Sunglasses</router-link></li>
                     </ul>
                 </div>
                 <div>

@@ -120,17 +120,16 @@
 
 /* #region  SCROLLBAR */
 body::-webkit-scrollbar {
-    width: 13px;
-    height: 13px;
+    width: 8px;
 }
 
 body::-webkit-scrollbar-thumb {
-    background: #dedede;
+    background: #b3b3b3;
     border-radius: 10px;
 }
 
 body::-webkit-scrollbar-thumb:hover {
-    background: #b8b8b8;
+    background: #7a7a7a;
 }
 
 body::-webkit-scrollbar-track {
@@ -182,14 +181,14 @@ nav::before {
 
 .selectorSlide-enter-active,
 .selectorSlide-leave-active {
-    transition-duration: .5s;
+    transition-duration: .25s;
     transition-timing-function: ease;
     transition-property: transform, opacity;
 }
 
 .selectorSlide-enter,
 .selectorSlide-leave-to {
-    transform: translateY(-50%);
+    transform: translateY(-10%);
     opacity: 0;
 }
 
@@ -205,12 +204,7 @@ nav::before {
 
 /* #endregion */
 
-
-.footerMain {
-    width: 95%;
-    max-width: 1575px;
-}
-
+/* #region  CENTERING */
 .horizontalCenter {
     left: 50%;
     transform: translateX(-50%);
@@ -228,41 +222,39 @@ nav::before {
     transform: translateY(-50%);
 }
 
-.bothCenter{
-    top:50%;
-    left:50%;
+.bothCenter {
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* #endregion */
+
+
+.footerMain {
+    width: 95%;
+    max-width: 1575px;
 }
 
 .noOutline:focus {
     outline: none;
 }
 
-.hoverLarge {
-    transition: .2s ease;
-}
-
-.hoverLarge:hover {
-    transform: scale(1.1);
-}
-
 
 /* #region  PAGE TRANSITION */
 .pageTransition-enter-to,
 .pageTransition-leave {
-    transform: translateY(0px);
     opacity: 1;
 }
 
 .pageTransition-enter,
 .pageTransition-leave-to {
-    transform: translateY(20px);
     opacity: 0;
 }
 
 .pageTransition-enter-active,
 .pageTransition-leave-active {
-    transition: all .3s ease;
+    transition: all .2s ease;
 }
 
 /* #endregion */
@@ -342,11 +334,11 @@ nav::before {
     filter: saturate(0) brightness(.7);
 }
 
-.genderSelectorglassesmen::before {
+.genderSelectorframesmen::before {
     background-image: url("https://www.opticalexpress.co.uk/media/1064/man-with-glasses-smiling-looking-into-distance.jpg");
 }
 
-.genderSelectorglasseswomen::before {
+.genderSelectorframeswomen::before {
     background-image: url("https://i.pinimg.com/originals/be/f5/e8/bef5e818dc7b3bf0b460c14c80c31238.jpg");
 }
 

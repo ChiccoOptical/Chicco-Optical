@@ -31,11 +31,11 @@
 	import Vue from 'vue'
 	import navBar from './components/NavBar.vue'
 	import footer from './components/Footer.vue'
-
+	
 	export default Vue.extend({
 		name:'app',
 		components:{
-			'selector-gender' : ()=>import(/* webpackPrefetch: true */ './components/selectorGender.vue'),
+			'selector-gender' : () => import(/* webpackPrefetch: true */'./components/selectorGender.vue'),
 			'nav-bar' : navBar,
 			'my-footer' : footer
 		},
@@ -53,9 +53,6 @@
 			closeSelector: function(){
 				this.selectorOpen = false;
 			}
-		},
-		created(){
-			console.log(this.$options)
 		}
 	})
 </script>

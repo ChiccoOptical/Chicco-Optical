@@ -310,6 +310,7 @@ module.exports = {
       ...theme('spacing'),
       full: '100%',
       screen: '100vh',
+      hardScreen: '864px'
     }),
     inset: {
       '0': '0',

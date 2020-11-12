@@ -13,11 +13,7 @@
             <item-card
                 v-for="(item, index) in productList"
                 :key="index"
-                :title="item.title"
-                :price="item.price"
-                :productType="item.productType"
-                :id="item.id"
-                :imageURL.sync="item.imageURL"
+                :product="item"
             ></item-card>
         </div>
     </div>
@@ -34,13 +30,14 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
     import itemCard from '../components/itemCard.vue'
     import product from '../types/product'
-    import firebase from 'firebase'
-    import db from '../firebase'
 
-    export default Vue.extend({
+    // MIXING ACTIVITY
+    import mixins from 'vue-typed-mixins'
+    import getProductsMixin from '../mixins/getProduct'
+
+    export default mixins(getProductsMixin).extend({
         name:'ProductList',
         components:{
             'item-card':itemCard
@@ -53,27 +50,12 @@
             }
         },
         beforeMount(){
-            if(this.gender){
-                db.collection('products' + '/' + this.productType + '/' + this.gender).get().then((snapshot)=>{
-                    snapshot.forEach((product) => {
-                        const productData = product.data() as product;
-                        productData.id = product.id
-                        productData.productType = this.productType
-
-
-                        productData.imageURL = productData.productType + '/' + productData.id + '.png';
-                        
-                        // FOR LATER
-                        // firebase.storage().ref(productData.productType + '/' + productData.id + '.png').getDownloadURL().then(result => {
-                        //     productData.imageURL = result 
-                        // });
-
-
-                        //Add productData to productList
-                        this.productList.push(productData);
-                    });
-                })
+            if(!this.gender){
+                return
             }
+            this.getAllProducts(this.productType, this.gender).then(productList =>{
+                this.productList = productList
+            })
         }
     })
 </script>

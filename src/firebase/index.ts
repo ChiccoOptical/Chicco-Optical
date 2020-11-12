@@ -17,7 +17,7 @@ const firebaseConfig = {
 }
 
 
-const db = firebase.initializeApp(firebaseConfig).firestore();
+const db = firebase.initializeApp(firebaseConfig);
 
 // const firestore = {
 //     glasses: db.collection('glasses'),

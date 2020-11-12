@@ -49,40 +49,60 @@ const routes: Array<RouteConfig> = [
 		}
 	},
 
-	// GLASSES
+	// Frames
 	{
-		path:'/glasses',
-		name: 'Glasses',
+		path:'/frames',
+		name: 'Frames',
 		component: () => import('../pages/ProductList.vue'),
 		meta: {
 			title: 'Glasses'
 		}
 	},
 	{
-		path: '/glasses/men',
-		name: 'Men Glasses',
+		path: '/frames/men',
+		name: 'Men Frames',
 		component: () => import('../pages/ProductList.vue'),
 		meta: {
 			title: 'Mens Glasses'
 		}
 	},
 	{
-		path: '/glasses/men/:id',
-		name: 'Mens Glasses Product',
+		path: '/frames/men/:id',
+		name: 'Mens Frames Product',
 		component: () => import('../pages/ProductListing.vue'),
 	},
 	{
-		path: '/glasses/women',
-		name: 'Women Glasses',
+		path: '/frames/women',
+		name: 'Women Frames',
 		component: () => import('../pages/ProductList.vue'),
 		meta: {
 			title: 'Womens Glasses'
 		}
 	},
 	{
-		path: '/glasses/women/:id',
-		name: 'Womens Glasses Product',
+		path: '/frames/women/:id',
+		name: 'Womens Frames Product',
 		component: () => import('../pages/ProductListing.vue'),
+	},
+	{
+		path: '/frames/children',
+		name: 'Children Frames',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Chlidrens Glasses'
+		}
+	},
+	{
+		path: '/frames/children/:id',
+		name: 'Childrens Frames Product',
+		component: () => import('../pages/ProductListing.vue'),
+	},
+
+	//LENS
+	{
+		path: '/lenses',
+		name: 'Lenses',
+		component: () => import('../pages/Lens.vue')
 	},
 	
 	// SUNGLASSES
@@ -109,7 +129,7 @@ const routes: Array<RouteConfig> = [
 	},
 	{
 		path: '/sunglasses/women',
-		name: 'Women Glasses',
+		name: 'Women Sunglasses',
 		component: () => import('../pages/ProductList.vue'),
 		meta: {
 			title: 'Womens Sunglasses'
@@ -120,49 +140,38 @@ const routes: Array<RouteConfig> = [
 		name: 'Womens Sunglasses Product',
 		component: () => import('../pages/ProductListing.vue'),
 	},
+	{
+		path: '/sunglasses/children',
+		name: 'Children Sunglasses',
+		component: () => import('../pages/ProductList.vue'),
+		meta: {
+			title: 'Chlidrens Glasses'
+		}
+	},
+	{
+		path: '/sunglasses/children/:id',
+		name: 'Childrens Sunglasses Product',
+		component: () => import('../pages/ProductListing.vue'),
+	},
 
 	// CONTACT LENSES
 	{
 		path: '/contactlenses',
 		name: 'ContactLenses',
-		component: () => import('../pages/ProductList.vue'),
+		component: () => import('../pages/ContactLenses.vue'),
 		meta: {
 			title: 'Contact Lenses'
 		}
 	},
-	{
-		path: '/contactlenses/men',
-		name: 'Men Contact Lenses',
-		component: () => import('../pages/ProductList.vue'),
-		meta: {
-			title: 'Mens Glasses'
-		}
-	},
-	{
-		path: '/contactlenses/men/:id',
-		name: 'Mens Contact Lenses Product',
-		component: () => import('../pages/ProductListing.vue'),
-	},
-	{
-		path: '/contactlenses/women',
-		name: 'Women Contact Lenses',
-		component: () => import('../pages/ProductList.vue'),
-		meta: {
-			title: 'Womens Glasses'
-		}
-	},
-	{
-		path: '/contactlenses/women/:id',
-		name: 'Womens Contact Lenses Product',
-		component: () => import('../pages/ProductListing.vue'),
-	},
+	
 
 	// 404 PAGE
 	{
 		path: "*", component: () => import('../pages/PageNotFound.vue'),
 		meta: {
 			title: '404'
-		}}
+		}
+	}
 ]
 
 // APPLY AND EXPORT
@@ -172,7 +181,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-	document.title= "Chicco Optical | " + to.meta.title
+	document.title = to.meta.title ? to.meta.title + " | Chicco Optical" : "Chicco Optical"
 	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description)
 	next()
 })

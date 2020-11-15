@@ -2,7 +2,7 @@
 <template>
 	<div id="app">
 		<!-- ========NAVBAR======== -->
-		<nav-bar v-on:close-selector="closeSelector()" v-on:expand-selector="expandSelector"></nav-bar>
+		<nav-bar v-on:close-selector="closeSelector" v-on:expand-selector="expandSelector"></nav-bar>
 		
 		<!-- ========SELECTOR======== -->
 		<transition name="selectorSlide">

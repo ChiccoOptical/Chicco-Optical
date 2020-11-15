@@ -25,7 +25,7 @@
                         v-show="imageLoaded"
                         class="left-0 absolute w-4/12"
                         id="logo"
-                        :src="resolveBrandImage(product.brand)"
+                        :src="require('@/assets/' + resolveBrandImage(product.brand))"
                         :alt="product.brand"
                         style="top:10%"
                     >
@@ -55,8 +55,8 @@
                         <h3 class="text-lg font-semibold mt-5">Colours</h3>
                         <div class="inline-flex flex-row gap-x-3 justify-center mt-1">
                             <div id="colorPods" :class="{active:colorIndex==3}" class="h-4 w-4 rounded-full overflow-hidden flex flex-row relative" v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
-                                <div class="h-full w-1/2" :style="'background-color:' + translateFrameColour(product.frameColours[colorIndex])"></div>
-                                <div class="h-full w-1/2" :style="'background-color:' + translateLensColour(product.lensColours[colorIndex])"></div>
+                                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[colorIndex]"></div>
+                                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[colorIndex]"></div>
                             </div>
                         </div>
 
@@ -84,10 +84,9 @@ import product from '../types/product'
 import mixins from 'vue-typed-mixins'
 import getProductMixin from '@/mixins/getProduct'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
-import translateColours from'@/mixins/translateColours'
 
 
-export default mixins(getProductMixin, resolveBrandImage, translateColours).extend({
+export default mixins(getProductMixin, resolveBrandImage).extend({
     name:'Product-Listing',
     data(){
         return{
@@ -116,6 +115,7 @@ export default mixins(getProductMixin, resolveBrandImage, translateColours).exte
     #colorPods{
         border: 3px solid #c5c5c5;
         box-sizing: content-box;
+        transform: rotate(45deg);
     }
     #colorPods.active{
         transform: scale(1.3);

@@ -10,9 +10,12 @@
         <!-- TITLE -->
         <h1 class="text-4xl mt-2 font-bold">{{ product.title }}</h1>
         <div class="flex flex-row gap-x-3 justify-center mt-3">
-            <div id="colorPods" :class="{active:colorIndex==3}" class="h-5 w-5 rounded-full overflow-hidden flex flex-row relative" v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
-                <div class="h-full w-1/2" :style="'background-color:' + translateFrameColour(product.frameColours[colorIndex])"></div>
-                <div class="h-full w-1/2" :style="'background-color:' + translateLensColour(product.lensColours[colorIndex])"></div>
+            <div id="colorPods"
+            :class="{active:colorIndex==3}"
+            class="h-5 w-5 rounded-full overflow-hidden flex flex-row relative" 
+            v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
+                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[colorIndex]"></div>
+                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[colorIndex]"></div>
             </div>
         </div>
     </div>
@@ -22,9 +25,8 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
-import translateColours from'@/mixins/translateColours'
 
-export default mixins(resolveBrandImage, translateColours).extend({
+export default mixins(resolveBrandImage).extend({
     name:'itemCard',
     props:{
         'product':{

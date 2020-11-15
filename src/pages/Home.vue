@@ -38,21 +38,32 @@
 
 		<!-- Our Products -->
 		<div class="p-6">
-			<h1 class="text-center text-4xl font-bold font-lora">Our Products</h1>
-			<p class="text-center">Our categories of products</p>
-			<div class="grid grid-rows-3 lg:grid-rows-none lg:grid-cols-3 lg:mx-20 mt-4 gap-4 productRowHome font-lora">
-				<router-link to="/glasses" tag="div" class="cursor-pointer relative">
-					<img src="https://images.wallpaperscraft.com/image/glasses_lenses_glass_139898_1920x1080.jpg" class="w-full" alt="Glasses">
-					<h2 class="absolute bothCenter text-white text-4xl font-semibold">Glasses</h2>
-				</router-link>
-				<router-link to="/sunglasses" tag="div"  class="cursor-pointer relative overflow-hidden">
-					<img src="../assets/sunglasses.png" class="h-full w-auto absolute" alt="Sunglasses">
-					<h2 class="absolute bothCenter text-white text-4xl font-semibold">Sunglasses</h2>
-				</router-link>
-				<router-link to="/contactlenses" tag="div" class="cursor-pointer relative overflow-hidden">
-					<img src="https://clark.com/wp-content/uploads/2018/06/contactlens.jpg" class="absolute h-full w-auto" alt="Contact Lenses">
-					<h2 class="absolute bothCenter text-white text-4xl font-semibold">Contact Lenses</h2>
-				</router-link>
+			<h1 class="text-center text-5xl font-bold font-lora">Our Products</h1>
+			<p class="text-center text-lg mb-6">Our categories of products</p>
+			
+			<div class="grid grid-cols-10 lg:mx-20">
+				<div class="col-span-1 relative">
+					<p id="sideText" class="font-lora absolute" style="top:5rem">
+						OUR PRODUCTS
+					</p>
+				</div>
+				<div class="col-span-9 grid grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-x-10 productRowHome font-lora">
+					<router-link to="/glasses" tag="div" class="cursor-pointer relative">
+						<img src="https://images.wallpaperscraft.com/image/glasses_lenses_glass_139898_1920x1080.jpg" class="w-full" alt="Glasses">
+						<h2 class="absolute bothCenter text-white text-4xl font-semibold">Glasses</h2>
+					</router-link>
+					<router-link to="/sunglasses" tag="div"  class="cursor-pointer relative overflow-hidden">
+						<img src="../assets/sunglasses.png" class="h-full w-auto absolute" alt="Sunglasses">
+						<h2 class="absolute bothCenter text-white text-4xl font-semibold">Sunglasses</h2>
+					</router-link>
+				</div>
+			</div>
+		</div>
+
+		<div class="p-5 px-48">
+			<div class="w-full overflow-hidden relative" style="height:70vh">
+				<h1 id="eyeExamText" class="absolute text-white text-6xl font-lora font-bold" style="left:3%;bottom:5%">Eye Exams</h1>
+				<img id="eyeExamImage" @click="goExams" class="w-full" src="https://cdn.theatlantic.com/thumbor/xg-O8VrStwMDS8ttx6uG9O3X9b0=/0x118:5520x2992/960x500/media/img/mt/2019/11/RTX3CJCH/original.jpg" alt="">
 			</div>
 		</div>
 
@@ -68,18 +79,35 @@
 </template>
 
 <script lang="ts">
-	import { Component, Vue } from 'vue-property-decorator';
-	import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
-	@Component({
-	components: {
-		HelloWorld,
-	},
-	})
-	export default class Home extends Vue {}
+import Vue from 'vue'
+export default Vue.extend({
+	name:'Home',
+	methods:{
+		goExams(): void{
+			this.$router.push('exams')
+		}
+	}
+})
 </script>
 
 <style scoped>
+	#sideText{
+		transform: rotate(-90deg);
+	}
+
+
+	#eyeExamImage{
+		filter: brightness(.6);
+		transition:.3s ease;
+		cursor: pointer;
+	}
+	#eyeExamImage:hover{
+		filter: brightness(.75);
+	}
+	#eyeExamText{
+		z-index: 1;
+	}
+
 	#mainText{
 		left:5%;
 	}

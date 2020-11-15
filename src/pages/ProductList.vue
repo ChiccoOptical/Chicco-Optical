@@ -4,8 +4,8 @@
         <div class="relative" style="height:50vh">
             <img src="../assets/glasses.png" alt="Glasses" class="h-full" style="transform: scale(0.7)">
             <div class="absolute verticalCenter flex flex-col items-end" style="right:10%;">
-                <p class="capitalize" style="line-height:100%">{{ productType }}</p>
-                <h1 class="text-6xl font-bold" style="line-height:100%">Main Text</h1>
+                <!-- <p class="capitalize" style="line-height:100%">{{ productType }}</p> -->
+                <h1 class="text-6xl font-bold" style="line-height:100%">Sunglasses</h1>
                 <h3>{{gender}}</h3>    
             </div>
         </div>
@@ -30,8 +30,16 @@
 </template>
 
 <script lang="ts">
-    import itemCard from '../components/itemCard.vue'
     import product from '../types/product'
+
+
+    // import loadingComponent from '@/components/loadingComponent.vue'
+    // import errorComponent from '@/components/errorComponent.vue'
+    // const itemcard = () => ({
+    //     component: import(/*webpackChunkName: "itemcard"*/'../components/itemCard.vue'),
+    //     loading: loadingComponent,
+    //     error: errorComponent
+    // });
 
     // MIXING ACTIVITY
     import mixins from 'vue-typed-mixins'
@@ -40,16 +48,16 @@
     export default mixins(getProductsMixin).extend({
         name:'ProductList',
         components:{
-            'item-card':itemCard
+            'item-card': ()=>import(/*webpackChunkName: "itemcard"*/ '@/components/itemCard.vue')
         },
         data(){
             return{
                 productList:[] as product[],
                 productType:this.$route.path.slice(1).split("/")[0],
-                gender:this.$route.path.slice(1).split("/")[1]
+                gender:this.$route.path.slice(1).split("/")[1],
             }
         },
-        beforeMount(){
+        created(){
             if(!this.gender){
                 return
             }

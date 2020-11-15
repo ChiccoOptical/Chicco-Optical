@@ -82,10 +82,13 @@ export default Vue.extend({
     },
     methods:{
         checkForm(){
-            if(!this.email || !this.name || this.phone.length == 14 || !this.message){
+            console.log("yoot")
+            if(!this.email || !this.name || this.phone.length != 14 || !this.message){
                 this.checkValid=true
                 return
             }
+
+            console.log("yees")
             db.firestore().collection('eyeexam')
                 .doc(this.email)
                 .set({

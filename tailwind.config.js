@@ -3,7 +3,10 @@ module.exports = {
     // removeDeprecatedGapUtilities: true,
     // purgeLayersByDefault: true,
   },
-  purge: [],
+  purge: {
+    enabled: true,
+    content: ['./src/**/*.vue'],
+  },
   target: 'relaxed',
   prefix: '',
   important: false,

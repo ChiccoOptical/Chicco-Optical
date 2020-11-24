@@ -32,23 +32,24 @@
 <script lang="ts">
     import product from '../types/product'
 
-
     // import loadingComponent from '@/components/loadingComponent.vue'
     // import errorComponent from '@/components/errorComponent.vue'
     // const itemcard = () => ({
-    //     component: import(/*webpackChunkName: "itemcard"*/'../components/itemCard.vue'),
+    //     component: import(/*webpackChunkName: "itemcard"*/ '../components/itemCard.vue'),
     //     loading: loadingComponent,
     //     error: errorComponent
     // });
 
+    
     // MIXING ACTIVITY
     import mixins from 'vue-typed-mixins'
     import getProductsMixin from '../mixins/getProduct'
 
+
     export default mixins(getProductsMixin).extend({
         name:'ProductList',
         components:{
-            'item-card': ()=>import(/*webpackChunkName: "itemcard"*/ '@/components/itemCard.vue')
+            'item-card': ()=>import(/*webpackChunkName: "itemcard"*/ '@/components/itemCard.vue'),
         },
         data(){
             return{

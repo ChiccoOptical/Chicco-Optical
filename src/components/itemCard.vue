@@ -9,15 +9,15 @@
 
         <!-- TITLE -->
         <h1 class="text-4xl mt-2 font-bold">{{ product.title }}</h1>
-        <div class="flex flex-row gap-x-3 justify-center mt-3">
+        <!-- <div class="flex flex-row gap-x-3 justify-center mt-3">
             <div id="colorPods"
-            :class="{active:colorIndex==3}"
             class="h-5 w-5 rounded-full overflow-hidden flex flex-row relative" 
-            v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
-                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[colorIndex]"></div>
-                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[colorIndex]"></div>
+            v-for="(colorIndex, index) in product.frameColours" :key="index">
+                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[index]"></div>
+                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[index]"></div>
             </div>
-        </div>
+        </div> -->
+        <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours"></color-pods>
     </div>
     </router-link>
 </template>
@@ -26,6 +26,8 @@
 import mixins from 'vue-typed-mixins'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
 
+import colorPods from '@/components/colourPods.vue'
+
 export default mixins(resolveBrandImage).extend({
     name:'itemCard',
     props:{
@@ -33,12 +35,9 @@ export default mixins(resolveBrandImage).extend({
             type:Object,
             required:true
         }
-    }
+    },
+    components:{
+        'color-pods':colorPods
+    },
 })
 </script>
-
-<style scoped>
-    #colorPods.active{
-        transform: scale(1.3);
-    }
-</style>

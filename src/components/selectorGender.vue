@@ -1,5 +1,5 @@
 <template>
-	<div class="h-full grid grid-cols-3">
+	<div class="h-full grid grid-cols-3" style="background-color:#f4f5f9">
 		<!-- MENS SIDE -->
 		<router-link :to="'/'  + glassesType + '/men'" class="w-full h-full inline-block relative">
 			<transition name="pageTransition" mode="out-in">

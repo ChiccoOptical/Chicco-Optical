@@ -53,12 +53,7 @@
 
                         <!-- COLOR PODS -->
                         <h3 class="text-lg font-semibold mt-5">Colours</h3>
-                        <div class="inline-flex flex-row gap-x-3 justify-center mt-1">
-                            <div id="colorPods" :class="{active:colorIndex==3}" class="h-4 w-4 rounded-full overflow-hidden flex flex-row relative" v-for="(colorIndex, index) in [0,1,2,3,4]" :key="index">
-                                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[colorIndex]"></div>
-                                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[colorIndex]"></div>
-                            </div>
-                        </div>
+                        <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours"></color-pods>
 
                         <!-- DETAILS -->
                         <h3 class="text-lg font-semibold mt-3">Details</h3>
@@ -79,15 +74,19 @@
 </template>
 
 <script lang="ts">
-import product from '../types/product'
+import product from '@/types/product'
 
 import mixins from 'vue-typed-mixins'
 import getProductMixin from '@/mixins/getProduct'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
 
+import colorPods from '@/components/colourPods.vue'
 
 export default mixins(getProductMixin, resolveBrandImage).extend({
     name:'Product-Listing',
+    components:{
+        'color-pods':colorPods
+    },
     data(){
         return{
             product:{} as product,
@@ -112,15 +111,6 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
 </script>
 
 <style scoped>
-    #colorPods{
-        border: 3px solid #c5c5c5;
-        box-sizing: content-box;
-        transform: rotate(45deg);
-    }
-    #colorPods.active{
-        transform: scale(1.3);
-        box-shadow: 0 0 0 1pt black;
-    }
     #logo{
         opacity: .1;
     }

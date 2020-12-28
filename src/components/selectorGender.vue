@@ -1,33 +1,26 @@
 <template>
 	<div class="h-full grid grid-cols-3" style="background-color:#f4f5f9">
-		<!-- MENS SIDE -->
-		<router-link :to="'/'  + glassesType + '/men'" class="w-full h-full inline-block relative">
+		<router-link 
+			:to="'/'  + glassesType + '/' + category" 
+			class="w-full h-full inline-block relative" 
+			v-for="(category, i) in ['men', 'women', 'children']" 
+			:key="i"
+		>
+			<!-- ACTUAL IMAGERY -->
 			<transition name="pageTransition" mode="out-in">
-				<img key=1 rel="preload" v-if="glassesType=='frames'" :src="imageByType[glassesType]['men']" alt="Guy">
-				<img key=2 rel="preload" v-else-if="glassesType=='sunglasses'" :src="imageByType[glassesType]['men']" alt="Guy">
+				<img :src="imageByType[glassesType][category]" :alt="category" v-if="glassesType=='frames'" key=1>
+				<img :src="imageByType[glassesType][category]" :alt="category" v-else-if="glassesType=='sunglasses'" key=2>
 			</transition>
-			<p class="absolute verticalCenter">Shop Mens</p>
-		</router-link>
-		<!-- WOMENS SIDE -->
-		<router-link :to="'/'  + glassesType + '/women'" class="w-full h-full inline-block relative">
-			<transition name="pageTransition" mode="out-in">
-				<img key=1 rel="preload" v-if="glassesType=='frames'" :src="imageByType[glassesType]['women']" alt="Woman">
-				<img key=2 rel="preload" v-else-if="glassesType=='sunglasses'" :src="imageByType[glassesType]['women']" alt="Woman">
-			</transition>
-			<p class="absolute verticalCenter">Shop Womens</p>
-		</router-link>
-		<router-link :to="'/'  + glassesType + '/children'" class="w-full h-full inline-block relative">
-			<transition name="pageTransition" mode="out-in">
-				<img key=1 rel="preload" v-if="glassesType=='frames'" src="../assets/frameschildren.png" alt="children">
-				<img key=2 rel="preload" v-else-if="glassesType=='sunglasses'" src="../assets/sunglasseschildren.png" alt="children">
-			</transition>
-			<p class="absolute verticalCenter">Shop Children</p>
+
+			<!-- LABEL -->
+			<p class="absolute verticalCenter">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>
 		</router-link>
 	</div>
 </template>
 
 <script lang="ts">
 	import Vue from 'vue'
+
 	export default Vue.extend({
 		props:['glassesType'],
 		data(){
@@ -36,13 +29,22 @@
 					frames:{
 						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-optical/0/e4e2c1a158.jpg",
 						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/women-optical/0/860555cab5.jpg",
-						children: "../assets/frameschildren.png"
+						children: require("@/assets/frameschildren.png")
 					},
 					sunglasses:{
 						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-sun/0/0a2b265010.jpg",
 						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/womens-sun/0/5253f83b13.jpg",
-						children: "../assets/sunglasseschildren.png"
+						children: require("@/assets/sunglasseschildren.png")
 					},
+				}
+			}
+		},
+		created(){
+			//Preload images
+			for(const [, value] of Object.entries(this.imageByType)){
+				for(const [, v] of Object.entries(value)){
+					const image = new Image();
+					image.src = v
 				}
 			}
 		}

@@ -6,13 +6,17 @@
 		
 		<!-- ========SELECTOR======== -->
 		<transition name="selectorSlide">
-		<div v-if="selectorOpen" :class="{popUpBig:selectorOpen}" class="popDown fixed bg-white w-full z-10" @click="closeSelector">
-			<selector-gender :glassesType="selectorType"></selector-gender>
-		</div>
+			<div v-show="selectorOpen" :class="{popUpBig:selectorOpen}" class="popDown fixed bg-white w-full z-10" @click="closeSelector">
+				<keep-alive>
+				<selector-gender :glassesType="selectorType"></selector-gender>
+				</keep-alive>
+			</div>
 		</transition>
+
+
 		<!-- SELECTOR BLACK BACKGROUND -->
 		<transition name="fade">
-		<div v-if="selectorOpen" @mouseover="closeSelector()" class="fixed bg-black w-full h-full opacity-75" style="z-index:9"></div>
+			<div v-if="selectorOpen" @mouseover="closeSelector()" class="fixed bg-black w-full h-full opacity-75" style="z-index:9"></div>
 		</transition>
 
 		<!-- ========CONTENT======== -->
@@ -31,18 +35,34 @@
 	import Vue from 'vue'
 	import navBar from './components/NavBar.vue'
 	import footer from './components/Footer.vue'
+	import selectorGender from './components/selectorGender.vue'
+
 	
 	export default Vue.extend({
 		name:'app',
 		components:{
-			'selector-gender' : () => import(/* webpackPrefetch: true */'./components/selectorGender.vue'),
+			'selector-gender' : selectorGender,
 			'nav-bar' : navBar,
 			'my-footer' : footer
 		},
 		data(){
 			return{
 				selectorOpen:false,
-				selectorType:""
+				selectorType:"",
+
+				//no
+				imageByType:{
+					frames:{
+						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-optical/0/e4e2c1a158.jpg",
+						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/women-optical/0/860555cab5.jpg",
+						children: require("@/assets/frameschildren.png")
+					},
+					sunglasses:{
+						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-sun/0/0a2b265010.jpg",
+						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/womens-sun/0/5253f83b13.jpg",
+						children: require("@/assets/sunglasseschildren.png")
+					},
+				}
 			}
 		},
 		methods:{

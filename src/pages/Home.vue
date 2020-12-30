@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- TOP BANENR -->
-		<div class="lg:h-hardScreen bg-blue-400 relative pt-16 lg:p-0">
+		<div class="lg:h-screen bg-blue-400 relative pt-16 lg:p-0">
 			<img class="relative lg:absolute bottom-0 horizontalCenter homePic " src="../assets/External/dior-GOLD-Diorstellaire04.png" alt="Glasses Model Home">
 			<div id="mainText" class="bg-white lg:bg-transparent p-2 lg:p-0 flex flex-col items-center lg:block lg:absolute onlyVerticalCenter w-full lg:w-1/3">
 				<p class="uppercase font-semibold">C<small>hicco</small> O<small>ptical</small></p>

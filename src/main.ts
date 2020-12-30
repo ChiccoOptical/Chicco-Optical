@@ -12,6 +12,11 @@ import './CSS/static.css'
 import VueResource from "vue-resource";
 Vue.use(VueResource);
 
+import 'vue-progress-path/dist/vue-progress-path.css'
+import VueProgress from 'vue-progress-path'
+
+Vue.use(VueProgress, {})
+
 Vue.config.productionTip = false
 
 new Vue({

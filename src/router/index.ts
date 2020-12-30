@@ -177,7 +177,10 @@ const routes: Array<RouteConfig> = [
 // APPLY AND EXPORT
 const router = new VueRouter({
 	routes,
-	mode:'history'
+	mode:'history',
+	scrollBehavior() {
+        window.scrollTo(0, 0);
+    }
 })
 
 router.beforeEach((to, from, next) => {

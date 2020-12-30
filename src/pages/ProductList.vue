@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-orange-400" v-if="gender">
+    <div class="bg-yellow-600" v-if="gender">
         <div style="height:72px"></div>
         <div class="relative" style="height:50vh">
             <img src="../assets/glasses.png" alt="Glasses" class="h-full" style="transform: scale(0.7)">

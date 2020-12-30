@@ -1,20 +1,20 @@
 <template>
-	<div class="h-full grid grid-cols-3" style="background-color:#f4f5f9">
-		<router-link 
+	<div class="h-full grid grid-cols-3"> <!-- style="background-color:#f4f5f9"> -->
+		<!-- Inner Component -->
+		<router-link
 			:to="'/'  + glassesType + '/' + category" 
-			class="w-full h-full inline-block relative" 
+			class="w-full h-full inline-block relative"
 			v-for="(category, i) in ['men', 'women', 'children']" 
 			:key="i"
 		>
 			<!-- ACTUAL IMAGERY -->
-			<transition name="pageTransition" mode="out-in">
-				<img :src="imageByType[glassesType][category]" :alt="category" v-if="glassesType=='frames'" key=1>
-				<img :src="imageByType[glassesType][category]" :alt="category" v-else-if="glassesType=='sunglasses'" key=2>
-			</transition>
+			<img :src="imageByType[glassesType][category]" :alt="category" v-if="glassesType=='frames'" key=1>
+			<img :src="imageByType[glassesType][category]" :alt="category" v-else-if="glassesType=='sunglasses'" key=2>
 
 			<!-- LABEL -->
 			<p class="absolute verticalCenter">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>
 		</router-link>
+		<!-- x3 -->
 	</div>
 </template>
 

@@ -9,13 +9,26 @@
                 <h3>{{gender}}</h3>    
             </div>
         </div>
-        <div class="bg-white mx-20 p-6 pt-12 grid grid-cols-3 gap-10">
-            <item-card
-                v-for="(item, index) in productList"
-                :key="index"
-                :product="item"
-            ></item-card>
-        </div>
+        <transition name="fade" mode="out-in">
+            <div class="bg-white mx-20 flex items-center justify-center h-screen/2" v-if="!loaded">
+                <loading-progress
+                    :progress="0"
+                    :indeterminate="true"
+                    size="128"
+                    rotate
+                    fillDuration="2"
+                    rotationDuration="1"
+                    class="mx-auto"
+                />
+            </div>
+            <div class="bg-white mx-20 p-6 pt-12 grid grid-cols-3 gap-10" v-else>
+                <item-card
+                    v-for="(item, index) in productList"
+                    :key="index"
+                    :product="item"
+                ></item-card>
+            </div>
+        </transition>
     </div>
 
     <!-- GENDER SELECTOR ON /glasses, /contactlenses, /sunglasses -->
@@ -56,6 +69,7 @@
                 productList:[] as product[],
                 productType:this.$route.path.slice(1).split("/")[0],
                 gender:this.$route.path.slice(1).split("/")[1],
+                loaded:false,
             }
         },
         created(){
@@ -64,6 +78,12 @@
             }
             this.getAllProducts(this.productType, this.gender).then(productList =>{
                 this.productList = productList
+
+                //load all the images in
+                for(const productItem in productList as product[]){
+                    new Image().src = productList[productItem].imageURL
+                }
+                this.loaded = true;
             })
         }
     })

@@ -230,19 +230,29 @@ nav::before {
 
 /* #endregion */
 
-/* #region  PAGE TRANSITION */
-.pageTransition-enter-to,
-.pageTransition-leave {
+/* #region  TRANSITIONS */
+.fade-enter-to,
+.fade-leave {
     opacity: 1;
 }
 
-.pageTransition-enter,
-.pageTransition-leave-to {
+.fade-enter,
+.fade-leave-to {
     opacity: 0;
 }
 
-.pageTransition-enter-active,
-.pageTransition-leave-active {
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .2s ease;
+}
+
+.noEndfade-enter,
+.noEndfade-leave-to {
+    opacity: 0;
+}
+
+.noEndfade-enter-active,
+.noEndfade-leave-active {
     transition: all .2s ease;
 }
 

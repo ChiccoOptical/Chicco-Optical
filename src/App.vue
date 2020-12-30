@@ -22,7 +22,7 @@
 			<!-- Selector holder -->
 			<div v-show="selectorOpen" class="popDown fixed bg-white w-full z-10" @click="closeSelector">
 				<!-- Selector Images and content on the inside + grid -->
-				<transition name="pageTransition" mode="out-in" appear>
+				<transition name="fade" mode="out-in" appear>
 					<keep-alive>
 						<component :is="'selector-gender-' + selectorType"></component>
 					</keep-alive>
@@ -32,14 +32,15 @@
 
 
 		<!-- SELECTOR BLACK BACKGROUND -->
-		<transition name="fade">
+		<transition name="noEndfade">
 			<div v-if="selectorOpen" @mouseover="closeSelector()" class="fixed bg-black w-full h-full opacity-75" style="z-index:9"></div>
 		</transition>
 
 		<!-- ========CONTENT======== -->
 		<div style="max-width:1920px flex items-center">
-			<transition name="pageTransition" mode="out-in">
-				<router-view :key="$route.path"/>
+			<transition name="fade" mode="out-in">
+				<router-view v-if="this.$store.state.routeLoaded" :key="$route.path"/>
+				<div v-else class="h-screen w-full bg-blue-400"></div>
 			</transition>
 		</div>
 
@@ -54,21 +55,21 @@
 	import footer from '@/components/Footer.vue'
 	import framesSelectorGender from '@/components/selectorGenders/frames.vue'
 	import sunglassesSelectorGender from '@/components/selectorGenders/sunglasses.vue'
-
-
+	import noneSelectorGender from '@/components/selectorGenders/none.vue'
 	
 	export default Vue.extend({
 		name:'app',
 		components:{
 			'selector-gender-frames' : framesSelectorGender,
 			'selector-gender-sunglasses' : sunglassesSelectorGender,
+			'selector-gender-none': noneSelectorGender,
 			'nav-bar' : navBar,
 			'my-footer' : footer
 		},
 		data(){
 			return{
 				selectorOpen:false,
-				selectorType:"frames"
+				selectorType:"none"
 			}
 		},
 		methods:{
@@ -77,7 +78,8 @@
 				this.selectorType = e
 			},
 			closeSelector: function(){
-				this.selectorOpen = false;
+				this.selectorOpen = false
+				this.selectorType = 'none'
 			}
 		}
 	})

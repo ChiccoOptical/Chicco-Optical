@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuex from '@/store'
 
 // VUE ROUTER
 import VueRouter, { RouteConfig } from 'vue-router'
@@ -186,7 +187,12 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	document.title = to.meta.title ? to.meta.title + " | Chicco Optical" : "Chicco Optical"
 	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description)
+	Vuex.state.routeLoaded = false;
 	next()
+})
+
+router.afterEach(()=>{
+	Vuex.state.routeLoaded = true;
 })
 
 export default router

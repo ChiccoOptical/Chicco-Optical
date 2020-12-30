@@ -1,6 +1,6 @@
 <template>
     <div class="bg-gray-300" style="padding-top:72px">
-        <div class="w-full" style="height:calc(100vh - 72px)">
+        <div class="w-full" style="height:calc(100vh - 72px)" v-if="loaded">
             <div class="relative h-full">
                 <!-- BACK BUTTON -->
                 <!-- <svg 
@@ -51,7 +51,7 @@
                         </h1>
                         <h2 class="text-lg">Model {{product.model}}</h2>
 
-                        <!-- COLOR PODS -->
+                        <!-- COLOR PODS --> 
                         <h3 class="text-lg font-semibold mt-5">Colours</h3>
                         <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours"></color-pods>
 
@@ -69,6 +69,15 @@
                     </div>
                 </transition>
             </div>
+        </div>
+        <div class="flex items-center justify-center" style="height:calc(100vh - 72px)" v-else>
+            <loading-progress
+                :indeterminate="true"
+                size="128"
+                rotate
+                fillDuration="2"
+                rotationDuration="1"
+            />
         </div>
     </div>
 </template>
@@ -90,7 +99,8 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
     data(){
         return{
             product:{} as product,
-            imageLoaded:false
+            imageLoaded:false,
+            loaded:false
         }
     },
     methods: {
@@ -105,6 +115,7 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
 
         this.getProductByID(id, productType, gender).then(data=>{
             this.product = data
+            this.loaded = true;
         })
     }
 })

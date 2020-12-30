@@ -29,28 +29,27 @@ export default Vue.extend({
             const productDatabase = db.firestore().collection(['products', productType, gender].join('/'));
 
             const snapshot = await productDatabase.get().catch(()=>{console.log("Error in getting all products");})
+            
             if(!snapshot){
                 return allProducts
                 //EDIT HERE FOR FRONTEND ERROR MESSAGE
             }
 
-            snapshot.forEach(async product=>{
-                const nowProduct = product.data() as product;
+            return Promise.all(
+                snapshot.docs.map(async product => {
+                    const nowProduct = product.data() as product;
 
-                nowProduct.id = product.id
-                nowProduct.productType = productType
-                nowProduct.imageURL = await this.getImageURL(product.id, productType)
+                    nowProduct.id = product.id
+                    nowProduct.productType = productType
+                    nowProduct.imageURL = await this.getImageURL(product.id, productType)
 
-                
-                const [tFrameColour, tLensColour] = await this.getFrameColours()
-                nowProduct.frameColours = nowProduct.frameColours.map(value=>tFrameColour[value])
-                nowProduct.lensColours = nowProduct.lensColours.map(value=>tLensColour[value])
+                    const [tFrameColour, tLensColour] = await this.getFrameColours()
+                    nowProduct.frameColours = nowProduct.frameColours.map(value=>tFrameColour[value])
+                    nowProduct.lensColours = nowProduct.lensColours.map(value=>tLensColour[value])
 
-                allProducts.push(nowProduct)
-            })
-
-            // FINAL RETURN
-            return allProducts
+                    return nowProduct
+                })
+            )
         },
 
         async getProductByID(id: string, productType: string, gender: string): Promise<product>{

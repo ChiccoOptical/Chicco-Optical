@@ -26,3 +26,5 @@ pnpm-debug.log*
 .firebaserc
 
 tailwind.css
+
+*.vue_fake

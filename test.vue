@@ -4,7 +4,7 @@
 				<!-- START LOGO -->
 			<div class="debugBorder lg:col-span-2">
 				<router-link to="/" class="w-auto">
-					<img src="../assets/logo.png" alt="Logo" class="h-12">
+					<img src="../assets/logo.svg" alt="Logo" class="h-12">
 				</router-link>
 			</div>
 

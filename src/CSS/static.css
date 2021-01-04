@@ -1,5 +1,6 @@
 /* FONT */
 @import url('https://fonts.googleapis.com/css?family=Lora');
+@import url('https://fonts.googleapis.com/css?family=Rubik');
 
 /* #region  SEARCH BOX */
 .search {
@@ -140,6 +141,31 @@ body::-webkit-scrollbar-track {
 
 /* FIREFOX */
 body {
+    scrollbar-color: #ffffff #dedede;
+    scrollbar-width: thin;
+}
+
+.scrollBar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    background: #b3b3b3;
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb:hover {
+    background: #7a7a7a;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: inset 7px 10px 12px #f0f0f0;
+}
+
+/* FIREFOX */
+.scrollBar {
     scrollbar-color: #ffffff #dedede;
     scrollbar-width: thin;
 }
@@ -352,11 +378,20 @@ html {
     scroll-behavior: smooth;
 }
 
-.footerMain {
-    width: 95%;
-    max-width: 1575px;
-}
-
 .noOutline:focus {
     outline: none;
+}
+
+.maxWidthPage {
+    max-width: 1536px;
+    margin: auto;
+}
+
+.maxerWidthPage {
+    max-width: 1920px;
+    margin: auto;
+}
+
+[v-cloak] {
+    display: none;
 }

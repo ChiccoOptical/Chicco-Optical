@@ -190,7 +190,8 @@ module.exports = {
         '"Courier New"',
         'monospace',
       ],
-      lora: ['Lora']
+      lora: 'Lora',
+      rubik: 'Rubik',
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],

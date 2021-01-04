@@ -8,7 +8,7 @@
 			:key="i"
 		>
 			<!-- ACTUAL IMAGERY -->
-			<img :src="imageByType[glassesType][category]" :alt="category" style="height:377.375px" key=1>
+			<img :src="imageByType[glassesType][category]" :alt="category" class="w-full" key=1>
 
 			<!-- LABEL -->
 			<p class="absolute verticalCenter" v-if="category != 'none'">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>

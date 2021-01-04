@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-gray-300" style="padding-top:72px">
-        <div class="w-full" style="height:calc(100vh - 72px)" v-if="loaded">
+    <div class="bg-gray-300">
+        <div class="w-full h-screen maxWidthPage" v-if="loaded">
             <div class="relative h-full">
                 <!-- BACK BUTTON -->
                 <!-- <svg 
@@ -23,18 +23,18 @@
                 <transition name="titleShow">
                     <img 
                         v-show="imageLoaded"
-                        class="left-0 absolute w-4/12"
+                        class="absolute w-4/12"
                         id="logo"
-                        :src="require('@/assets/' + resolveBrandImage(product.brand))"
+                        :src="require('@/assets/logos/' + resolveBrandImage(product.brand))"
                         :alt="product.brand"
-                        style="top:10%"
+                        style="top:15%;left:2%"
                     >
                 </transition>
                 <transition name="imageShow">
                     <img v-show="imageLoaded" :src="product.imageURL" style="right:5%" id="productImage" class="absolute verticalCenter w-6/12" alt="Product Image" @load="imageLoadedTrue">
                 </transition>
 
-                <transition name="titleShow">
+                <transition name="titleShow" appear>
                     <!-- BLOCK OF TEXT -->
                     <div
                         v-if="product.title"
@@ -70,7 +70,7 @@
                 </transition>
             </div>
         </div>
-        <div class="flex items-center justify-center" style="height:calc(100vh - 72px)" v-else>
+        <div class="flex items-center justify-center h-screen" v-else>
             <loading-progress
                 :indeterminate="true"
                 size="128"
@@ -108,6 +108,11 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
             this.imageLoaded = true
         }
     },
+    created(){
+        [require('../assets/nosepad.svg'), require('../assets/glassesSize.svg')].forEach(url=>{
+            new Image().src = url;
+        })
+    },
     beforeMount(){
         const productType = this.$route.path.slice(1).split("/")[0]
         const gender = this.$route.path.slice(1).split("/")[1]
@@ -116,7 +121,7 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
         this.getProductByID(id, productType, gender).then(data=>{
             this.product = data
             this.loaded = true;
-        })
+        })            
     }
 })
 </script>

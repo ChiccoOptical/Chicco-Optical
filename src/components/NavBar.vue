@@ -1,10 +1,10 @@
 <template>
-	<nav class="fixed w-full z-20">
-		<div style="max-width:1536px" class="grid grid-cols-2 lg:grid-cols-9 px-2 lg:p-6 py-3 lg:py-3 mx-auto w-full">
+	<nav class="fixed w-full z-20" style="box-shadow: rgb(0 0 0 / 25%) 0 -1px 28px;">
+		<div class="grid grid-cols-2 lg:grid-cols-9 px-2 lg:p-6 py-3 lg:py-3 w-full maxWidthPage">
 				<!-- START LOGO -->
 			<div class="debugBorder lg:col-span-2">
 				<router-link to="/" class="w-auto">
-					<img src="../assets/logo.png" alt="Logo" class="h-12">
+					<img src="../assets/logo.svg" alt="Logo" class="h-12">
 				</router-link>
 			</div>
 

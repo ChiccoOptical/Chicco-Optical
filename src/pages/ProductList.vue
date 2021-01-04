@@ -1,12 +1,12 @@
 <template>
     <div class="bg-yellow-600" v-if="gender">
         <div style="height:72px"></div>
-        <div class="relative" style="height:50vh">
-            <img src="../assets/glasses.png" alt="Glasses" class="h-full" style="transform: scale(0.7)">
-            <div class="absolute verticalCenter flex flex-col items-end" style="right:10%;">
+        <div class="relative maxWidthPage w-5/6" style="height:50vh;max-height: 500px;">
+            <img src="../assets/glasses.png" alt="Glasses" class="w-5/12 absolute verticalCenter">
+            <div class="absolute verticalCenter flex flex-col items-end right-0">
                 <!-- <p class="capitalize" style="line-height:100%">{{ productType }}</p> -->
-                <h1 class="text-6xl font-bold" style="line-height:100%">Sunglasses</h1>
-                <h3>{{gender}}</h3>    
+                <h1 class="text-6xl font-bold capitalize" style="line-height:100%">{{ productType }}</h1>
+                <h3 class="capitalize">{{gender}}</h3>    
             </div>
         </div>
         <transition name="fade" mode="out-in">
@@ -21,7 +21,7 @@
                     class="mx-auto"
                 />
             </div>
-            <div class="bg-white mx-20 p-6 pt-12 grid grid-cols-3 gap-10" v-else>
+            <div class="bg-white p-6 pt-8 grid grid-cols-3 gap-10 maxWidthPage w-5/6" v-else>
                 <item-card
                     v-for="(item, index) in productList"
                     :key="index"

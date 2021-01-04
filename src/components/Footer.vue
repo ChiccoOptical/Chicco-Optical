@@ -1,7 +1,7 @@
 <template>
     <footer class="w-full bg-gray-200 flex flex-col items-center">
         <!-- Main Footer -->
-        <div class="flex flex-col lg:grid grid-cols-8 footerMain py-6 px-8">
+        <div class="flex flex-col lg:grid grid-cols-8 py-10 px-8 maxWidthPage w-11/12">
             <!-- Pages -->
             <div class="col-span-5 row-span-1 flex flex-col gap-y-4 lg:flex-row lg:gap-0 justify-between lg:pr-8 text-center lg:text-left mb-6 lg:mb-0">
                 <div>
@@ -12,15 +12,15 @@
                     <h3>PRODUCTS</h3>
                     <ul>
                         <li><router-link to="/frames">Frames</router-link></li>
+                        <li><router-link to="/sunglasses">Sunglasses</router-link></li>
                         <li><router-link to="/lenses">Lenses</router-link></li>
                         <li><router-link to="/contactlenses">Contact Lenses</router-link></li>
-                        <li><router-link to="/sunglasses">Sunglasses</router-link></li>
                     </ul>
                 </div>
                 <div>
                     <h3>SERVICES</h3>
                     <ul>
-                        <li>Eye Exams</li>
+                        <li><router-link to="/exams">Eye Exams</router-link></li>
                     </ul>
                 </div>
                 <div>
@@ -72,12 +72,18 @@
 <style scoped>
 	h3{
 		font-size: 1.2rem;
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-	}
+		font-weight: 700;
+		margin-bottom: 0.4rem;
+    }
+    
+    li{
+        font-weight: 500;
+        opacity:0.8;
+        margin-bottom: 0.1rem;
+    }
 
 	h1{
 		font-size: 2.25rem;
-		font-weight: 700;
-	}
+		font-weight: 800;
+    }
 </style>

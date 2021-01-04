@@ -37,7 +37,7 @@
 		</transition>
 
 		<!-- ========CONTENT======== -->
-		<div style="max-width:1920px flex items-center">
+		<div style="min-height:calc(100vh - 256px)">
 			<transition name="fade" mode="out-in">
 				<router-view v-if="this.$store.state.routeLoaded" :key="$route.path"/>
 				<div v-else class="h-screen w-full bg-blue-400"></div>

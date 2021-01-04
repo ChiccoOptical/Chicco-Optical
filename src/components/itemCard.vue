@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="this.$route.path + '/' +  product.id">
+    <router-link :to="this.$route.path + '/' +  product.id" class="flex items-end">
     <div class="p-6 text-center cursor-pointer relative">
         <!-- PRODUCT -->
         <img class="w-full" :src="product.imageURL" alt="IMAGE NOT FOUND" style="z-index:1">
@@ -17,7 +17,7 @@
                 <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[index]"></div>
             </div>
         </div> -->
-        <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours"></color-pods>
+        <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours" class="mt-3"></color-pods>
     </div>
     </router-link>
 </template>

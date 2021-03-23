@@ -9,9 +9,11 @@ interface Product{
     nosepad: string;
     fitRangeLow: number;
     fitRangeHigh: number;
+    price: number;
     
     // FOR BACKEND ISH
     id: string;
+    gender:string;
     productType: string;
 
     // GENERATE THINGS

@@ -56,7 +56,7 @@ export default Vue.extend({
             const productRef = db.firestore().collection(['products', productType, gender].join('/')).doc(id);
             
             // Get the product
-            const getData = await productRef.get().catch(()=>{console.log("Error in getting singular product")})
+            const getData = await productRef.get().catch(()=>{throw "Error in getting singular product"})
             if(!getData){
                 return {} as product
                 //EDIT HERE FOR FRONT END ERROR MESSAGE
@@ -84,7 +84,6 @@ export default Vue.extend({
 
         async getFrameColours(): Promise<Record<string, string>[]>{
             if(Object.keys(this.tFrameColour).length > 0 && Object.keys(this.tLensColour).length > 0){
-                console.log('getting from cache')
                 return [this.tFrameColour, this.tLensColour]
             }
             const frameColours = (await db.firestore().collection('products').doc('frameColours').get()).data() as Record<string, string>

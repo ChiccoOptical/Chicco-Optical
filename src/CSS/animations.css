@@ -1,0 +1,72 @@
+/* SELECTOR SLIDE */
+.selectorSlide-enter-active,
+.selectorSlide-leave-active {
+    transition-duration: .25s;
+    transition-timing-function: ease;
+    transition-property: transform, opacity;
+}
+
+.selectorSlide-enter,
+.selectorSlide-leave-to {
+    transform: translateY(-10%);
+    opacity: 0;
+}
+
+.selectorSlide-enter,
+.selectorSlide-leave-to {
+    opacity: 0;
+}
+
+
+/* CART SLIDE */
+.cartSlide-enter-active,
+.cartSlide-leave-active {
+    transition-duration: .25s;
+    transition-timing-function: ease;
+    transition-property: transform, opacity;
+}
+
+.cartSlide-enter,
+.cartSlide-leave-to {
+    transform: translateX(20%);
+    opacity: 0;
+}
+
+
+/* FADE */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .5s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave {
+    opacity: 1;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .2s ease;
+}
+
+
+/* NOENDFADE */
+.noEndfade-enter,
+.noEndfade-leave-to {
+    opacity: 0;
+}
+
+.noEndfade-enter-active,
+.noEndfade-leave-active {
+    transition: all .2s ease;
+}

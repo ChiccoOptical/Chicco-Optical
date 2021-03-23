@@ -17,6 +17,7 @@ import VueProgress from 'vue-progress-path'
 
 Vue.use(VueProgress, {})
 
+
 Vue.config.productionTip = false
 
 new Vue({

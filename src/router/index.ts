@@ -50,6 +50,16 @@ const routes: Array<RouteConfig> = [
 		}
 	},
 
+	//Checkout
+	{
+		path: '/checkout',
+		name: 'Checkout Page',
+		component: () => import('../pages/CheckOut.vue'),
+		meta: {
+			title: 'Checkout'
+		}
+	},
+
 	// Frames
 	{
 		path:'/frames',
@@ -164,6 +174,13 @@ const routes: Array<RouteConfig> = [
 			title: 'Contact Lenses'
 		}
 	},
+
+	//TEST PAGE
+	{
+		path:"/test",
+		name:"Test Page",
+		component: ()=>import('../pages/test.vue')
+	},
 	
 
 	// 404 PAGE
@@ -188,6 +205,10 @@ router.beforeEach((to, from, next) => {
 	document.title = to.meta.title ? to.meta.title + " | Chicco Optical" : "Chicco Optical"
 	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description)
 	Vuex.state.routeLoaded = false;
+
+	if(to.meta.title == "Checkout" && Vuex.state.cart.length <= 0){
+		router.push('/')
+	}
 	next()
 })
 

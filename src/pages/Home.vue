@@ -12,24 +12,23 @@
 					<h1 class="text-center lg:text-left text-6xl font-black mb-4 font-lora">Quality Glasses in Ottawa</h1>
 					<div class="flex flex-row">
 						<router-link
-							to="/frames/men"
-							tag="button"
-							class="
-								mr-1 bg-white hover:bg-blue-500 hover:text-white border-2 border-solid hover:border-blue-600
-								transition-colors duration-200 in-expo rounded-full px-4 py-1 mt-3
-							"
+							to="/frames/men"				
 						>
+						<button
+						class="mr-1 bg-white hover:bg-blue-500 hover:text-white border-2 border-solid hover:border-blue-600
+							transition-colors duration-200 in-expo rounded-full px-4 py-1 mt-3"
+						> 
 							Shop Mens
+						</button>
 						</router-link>
 						<router-link 
 							to="/frames/women"
-							tag="button"
-							class="
-								ml-1 bg-white hover:bg-blue-500 hover:text-white border-2 border-solid hover:border-blue-600 
-								transition-colors duration-200 in-expo rounded-full px-4 py-1 mt-3
-							"
 						>
+						<button
+							class="ml-1 bg-white hover:bg-blue-500 hover:text-white border-2 border-solid hover:border-blue-600 
+								transition-colors duration-200 in-expo rounded-full px-4 py-1 mt-3">
 							Shop Womens
+						</button>
 						</router-link>
 					</div>
 				</div>
@@ -48,13 +47,17 @@
 			
 			<div class="relative mx-28">
 				<div class="grid grid-rows-2 lg:grid-rows-none lg:grid-cols-2 gap-x-10 productRowHome font-lora">
-					<router-link to="/glasses" tag="div" class="cursor-pointer relative">
-						<img src="https://images.wallpaperscraft.com/image/glasses_lenses_glass_139898_1920x1080.jpg" class="w-full" alt="Glasses">
-						<h2 class="absolute bothCenter text-white text-4xl font-semibold">Glasses</h2>
+					<router-link to="/glasses">
+						<div class="cursor-pointer relative">
+							<img src="https://images.wallpaperscraft.com/image/glasses_lenses_glass_139898_1920x1080.jpg" class="w-full" alt="Glasses">
+							<h2 class="absolute bothCenter text-white text-4xl font-semibold">Glasses</h2>
+						</div>
 					</router-link>
-					<router-link to="/sunglasses" tag="div"  class="cursor-pointer relative overflow-hidden">
-						<img src="../assets/sunglasses.png" class="h-full w-auto absolute" alt="Sunglasses">
-						<h2 class="absolute bothCenter text-white text-4xl font-semibold">Sunglasses</h2>
+					<router-link to="/sunglasses">
+						<div class="cursor-pointer relative overflow-hidden">
+							<img src="../assets/sunglasses.png" class="h-full w-auto absolute" alt="Sunglasses">
+							<h2 class="absolute bothCenter text-white text-4xl font-semibold">Sunglasses</h2>
+						</div>
 					</router-link>
 				</div>
 			</div>

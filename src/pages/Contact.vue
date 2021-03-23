@@ -84,4 +84,55 @@
     li svg{
         margin-right: 9px;
     }
+
+    
+    #contactForm div textarea {
+        resize: none;
+    }
+
+    #contactForm div input[type="text"],
+    #contactForm div textarea {
+        border-bottom-width: 2px;
+        transition-property: border-color;
+        transition-duration: 100ms;
+        padding: 0.5rem;
+        width: 100%;
+    }
+
+    #contactForm div input[type="text"]:focus,
+    #contactForm div textarea:focus {
+        border-color: #b794f4;
+    }
+
+    #contactForm div input[type="text"]::placeholder,
+    #contactForm div textarea::placeholder {
+        color: transparent;
+    }
+
+    /* STANDARD */
+    #contactForm div label {
+        top: 0;
+        position: absolute;
+        left: 8px;
+        font-weight: bold;
+        transition: .3s ease;
+        cursor: text;
+        color: #00000052;
+    }
+
+    /* DOWNSTAIRS */
+    #contactForm div input[type="text"]:placeholder-shown~label,
+    #contactForm div textarea:placeholder-shown~label {
+        font-size: 1.2rem;
+        top: 20px;
+    }
+
+    /* UPSTAIRS */
+    #contactForm div input:focus~label,
+    #contactForm div textarea:focus~label {
+        top: 0;
+        font-size: 1rem;
+        cursor: text;
+        color: #4d0eb98f;
+    }
 </style>

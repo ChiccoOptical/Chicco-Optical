@@ -3,9 +3,10 @@
         <div class="w-full h-screen maxWidthPage" v-if="loaded">
             <div class="relative h-full">
                 <!-- BACK BUTTON -->
-                <!-- <svg 
+                <svg
                     @click="$router.go(-1)"
-                    class="cursor-pointer h-12 w-auto rounded-lg"
+                    class="cursor-pointer absolute h-12 w-auto rounded-lg bg-white z-10"
+                    style="top:100px"
                     id="backButton"
                     fill="currentColor"
                     viewBox="0 0 20 20"
@@ -18,7 +19,7 @@
                         width="100%"
                         height="100%"
                     ></path>
-                </svg> -->
+                </svg>
 
                 <transition name="titleShow">
                     <img 
@@ -49,7 +50,7 @@
                         <h1 class="font-bold leading-tight mb-2" style="font-size:4.5rem">
                             {{product.title}}
                         </h1>
-                        <h2 class="text-lg">Model {{product.model}}</h2>
+                        <h2 class="text-lg">Model: <strong>{{product.model}}</strong></h2>
 
                         <!-- COLOR PODS --> 
                         <h3 class="text-lg font-semibold mt-5">Colours</h3>
@@ -58,14 +59,20 @@
                         <!-- DETAILS -->
                         <h3 class="text-lg font-semibold mt-3">Details</h3>
                         <div class="flex flex-row items-center">
-                            <img class="w-8 mr-2" src="../assets/glassesSize.svg" alt="Glasses Size">
+                            <img class="w-8 mr-2" src="../assets/icons/glassesSize.svg" alt="Glasses Size">
                             <p>{{product.size}}</p>
                         </div>
                         <div class="flex flex-row items-center">
-                            <img class="w-8 mr-2" src="../assets/nosepad.svg" alt="Nosepad">
+                            <img class="w-8 mr-2" src="../assets/icons/nosepad.svg" alt="Nosepad">
                             <p>{{product.nosepad}}</p>
                         </div>
                         <p>-/+{{product.fitRangeLow}}.00 ➡ -/+{{product.fitRangeHigh}}.00</p>
+
+
+                        <button @click="addCart()" id="addCartButton" class="flex flex-row focus:ring noOutline bg-white hover:bg-gray-200 transition-colors p-3 px-4 mt-4 rounded-md">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <p class="ml-2 font-bold">ADD TO CART</p>
+                        </button>
                     </div>
                 </transition>
             </div>
@@ -106,14 +113,15 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
     methods: {
         imageLoadedTrue(){
             this.imageLoaded = true
+        },
+        addCart(){
+            this.$store.commit('addToCart', this.product)
         }
     },
     created(){
-        [require('../assets/nosepad.svg'), require('../assets/glassesSize.svg')].forEach(url=>{
+        [require('../assets/icons/nosepad.svg'), require('../assets/icons/glassesSize.svg')].forEach(url=>{
             new Image().src = url;
         })
-    },
-    beforeMount(){
         const productType = this.$route.path.slice(1).split("/")[0]
         const gender = this.$route.path.slice(1).split("/")[1]
         const id = this.$route.params.id
@@ -121,8 +129,10 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
         this.getProductByID(id, productType, gender).then(data=>{
             this.product = data
             this.loaded = true;
-        })            
-    }
+        }).catch(()=>{
+            this.$router.replace("./");
+        })
+    },
 })
 </script>
 
@@ -164,5 +174,12 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
     .titleShow-enter-active,
     .titleShow-leave-active{
         transition: all .7s ease;
+    }
+
+    #addCartButton{
+        transition: transform ease-out 0.1s;
+    }
+    #addCartButton:active{
+        transform: scale(0.9);
     }
 </style>

@@ -10,7 +10,7 @@
             </div>
         </div>
         <transition name="fade" mode="out-in">
-            <div class="bg-white mx-20 flex items-center justify-center h-screen/2" v-if="!loaded">
+            <div class="bg-white maxWidthPage flex items-center justify-center h-screen/2" v-if="!loaded">
                 <loading-progress
                     :progress="0"
                     :indeterminate="true"
@@ -21,7 +21,7 @@
                     class="mx-auto"
                 />
             </div>
-            <div class="bg-white p-6 pt-8 grid grid-cols-3 gap-10 maxWidthPage w-5/6" v-else>
+            <div class="bg-white p-6 pt-8 grid grid-cols-3 gap-10 maxWidthPage w-5/6" v-if="loaded">
                 <item-card
                     v-for="(item, index) in productList"
                     :key="index"

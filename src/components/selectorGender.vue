@@ -1,5 +1,5 @@
 <template>
-	<div class="h-full grid grid-cols-3"> <!-- style="background-color:#f4f5f9"> -->
+	<div class="h-full grid grid-cols-3" id="genderSELECTOR"> <!-- style="background-color:#f4f5f9"> -->
 		<!-- Inner Component -->
 		<router-link
 			:to="'/'  + glassesType + '/' + category" 
@@ -8,10 +8,10 @@
 			:key="i"
 		>
 			<!-- ACTUAL IMAGERY -->
-			<img :src="imageByType[glassesType][category]" :alt="category" class="w-full" key=1>
+			<img :src="imageByType[glassesType][category]" :alt="category" class="w-full" key=1 :class="{'forceSize':glassesType == 'none'}">
 
 			<!-- LABEL -->
-			<p class="absolute verticalCenter" v-if="category != 'none'">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>
+			<p class="absolute verticalCenter" v-if="glassesType != 'none'">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>
 		</router-link>
 		<!-- x3 -->
 	</div>
@@ -26,26 +26,24 @@
 			return{
 				imageByType:{
 					frames:{
-						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-optical/0/e4e2c1a158.jpg",
-						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/women-optical/0/860555cab5.jpg",
-						children: require("@/assets/frameschildren.png")
+						men: require("@/assets/nav/framesmen.jpg"),
+						women: require("@/assets/nav/frameswomen.jpg"),
+						children: require("@/assets/nav/frameschildren.png")
 					},
 					sunglasses:{
-						men: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/men-sun/0/0a2b265010.jpg",
-						women: "https://i.warbycdn.com/v/c/assets/summer-nav-flyout/image/womens-sun/0/5253f83b13.jpg",
-						children: require("@/assets/sunglasseschildren.png")
+						men: require("@/assets/nav/sunglassesmen.jpg"),
+						women: require("@/assets/nav/sunglasseswomen.jpg"),
+						children: require("@/assets/nav/sunglasseschildren.png")
 					},
 					none:{
-						men: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Transparent.png",
-						women: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Transparent.png",
-						children: "https://upload.wikimedia.org/wikipedia/commons/8/8c/Transparent.png"
+						men: require('@/assets/nav/Transparent.png'),
+						women: require('@/assets/nav/Transparent.png'),
+						children: require('@/assets/nav/Transparent.png')
 					}
 				}
 			}
 		},
 		created(){
-			console.log('preload')
-			console.log(this.imageByType[this.glassesType as 'frames'|'sunglasses'|'none']['women'])
 			//Preload images
 			for(const [, value] of Object.entries(this.imageByType)){
 				for(const [, v] of Object.entries(value)){
@@ -66,5 +64,9 @@
 	a:hover p{
 		border: 0px solid #000000d5;
 		border-bottom-width: 3px;
+	}
+
+	.forceSize{
+		height: 377px;
 	}
 </style>

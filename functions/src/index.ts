@@ -1,47 +1,25 @@
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
 import * as functions from "firebase-functions";
 
-// IMPORTS AND HELPERS
-import Stripe from "stripe"
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-    apiVersion: "2020-08-27"
-})
+export const helloWorld = functions.https.onRequest((request, response) => {
+  functions.logger.info("Hello logs!", {structuredData: true});
+  response.send("Hello from Firebase!");
+});
 
-import { app } from './api'
+
+import * as express from 'express'
+import * as cors from 'cors'
+const app = express()
+app.use(cors({ origin: true }));
+
 export const payments = functions.https.onRequest(app)
 
-//WEBHOOK THINGS
-// app.post('/webhook', async (req, res) => {
-//     const sig = req.headers['stripe-signature'] as string
-//     const endpointSecret = '';
+//
+//CHANGE WITH firebase functions:config:set stripe.secret=[ENTER SECRET KEY HERE]
+import Stripe from 'stripe';
+const stripe = new Stripe('sk_test_51IXE3zJY5AEAzijm7vmdUygn26Le6VJIbZf9bwGKMc8zm1RZLivd5EvUgUJ6flMaYSppFf0dDZ9P89cTDZ5Toatg00WHoBa3Zl', {
+    apiVersion: "2020-08-27"  
+})
 
+stripe.balance
 
-//     let event;
-//     try{
-//         event = stripe.webhooks.constructEvent(req.body.rawBody, sig, endpointSecret)
-//     }catch (err){
-//         res.status(400).end()
-//         return;
-//     }
-
-//     //handle webhook
-//     const intent = event.data.object
-//     switch(event.type){
-//         case 'payment_intent.succeeded':
-//             //UPDATE FIRESTORE TO SHOW ORDER
-//             break;
-//         case 'payment_intent.failed':
-//             //SOMETHING IDK YET
-//             break;
-//     }
-// })
-
-
-
-//Expose express api as a single cloud function
+///process.env.STRIPE_SECRET_KEY as string

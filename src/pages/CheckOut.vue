@@ -4,15 +4,18 @@
 		<div style="height:calc(100vh - 72px)">
 			<div class="maxWidthPage grid grid-cols-5 h-full">
 				<!-- FIRST COLUMN -->
-				<div class="col-span-3 h-full p-10 px-16">
-					<h1>Credit Card Details</h1>
-					<div id="card-number"></div>
-					<div id="card-expiry"></div>
-					<div id="card-cvc"></div>
+				<div class="col-span-3 h-full py-20 px-16 flex flex-col">
+					<h1 class="text-2xl font-bold mb-4">Credit Card Details</h1>
+					<div id="card-number" class="border-2 p-2 rounded-md mb-2"></div>
+					<div class="flex flex-row gap-4">
+						<div id="card-expiry" class="border-2 flex-1 p-2 rounded-md"></div>
+						<div id="card-cvc" class="border-2 flex-1 p-2 rounded-md"></div>
+					</div>
+					<button @click="payNow">PAY NOW</button>
 				</div>
 
 				<!-- SECOND COLUMN -->
-				<div class="col-span-2 bg-gray-100 h-full p-10 px-16">
+				<div class="col-span-2 bg-gray-100 h-full py-20 px-16">
 					<div class="flex flex-col gap-y-4">
 						<div v-for="(item, i) in this.$store.state.cart" :key="i">
 							<router-link :to="`/${item.productType}/${item.gender}/${item.id}`">
@@ -59,7 +62,7 @@ import product from '@/types/product'
 import {loadStripe} from '@stripe/stripe-js';
 
 //STRIPE TYPES for Typescript
-import {StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement} from '@stripe/stripe-js'
+import {StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement, StripeElementStyle, Stripe, StripeElements} from '@stripe/stripe-js'
 
 export default Vue.extend({
 	name:"Checkout",
@@ -70,9 +73,14 @@ export default Vue.extend({
 			total:0,
 
 			//card details
+			// cardElement:{} as StripeCardElement,
 			cardNumber:{} as StripeCardNumberElement,
 			cardExpiry:{} as StripeCardExpiryElement,
-			cardCvc:{} as StripeCardCvcElement
+			cardCvc:{} as StripeCardCvcElement,
+
+			stripe:{} as Stripe,
+			elements: {} as StripeElements,
+			paymentIntent:{}
 		}
 	},
 	created(){
@@ -81,15 +89,17 @@ export default Vue.extend({
 		this.total = this.subtotal + this.taxes
 	},
 	async mounted(){
-		const stripe = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
-		if(!stripe){
+		const stripeTEMP = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+		if(!stripeTEMP){
 			console.log("STRIPE LOADING ERROR")
 			return
 		}
+		this.stripe = stripeTEMP
 
 		const style = {
 			base: {
-				fontSize: '14px',
+				//CHECK https://stripe.com/docs/js/appendix/style
+				fontSize: '20px',
 				'::placeholder': {
 					color: '#aab7c4',
 				},
@@ -98,20 +108,76 @@ export default Vue.extend({
 				color: '#fa755a',
 				iconColor: '#fa755a',
 			},
-		};
+		} as StripeElementStyle
 
-		//STRIPE MANAGEMENT
-		const elements = stripe.elements()
-		this.cardNumber = elements.create('cardNumber', { style });
+		//STRIPE ELEMENT MANAGEMENT
+		this.elements = this.stripe.elements()
+		// this.cardElement = elements.create('card');
+		// this.cardElement.mount('#card')
+		this.cardNumber = this.elements.create('cardNumber', { style });
 		this.cardNumber.mount('#card-number');
-		this.cardExpiry = elements.create('cardExpiry', { style });
+		this.cardExpiry = this.elements.create('cardExpiry', { style });
 		this.cardExpiry.mount('#card-expiry');
-		this.cardCvc = elements.create('cardCvc', { style });
+		this.cardCvc = this.elements.create('cardCvc', { style });
 		this.cardCvc.mount('#card-cvc');
+
+
+		this.createPaymentIntent()
 	},
 	methods:{
 		format(num:number){
 			return num.toLocaleString('en-US', { style: 'currency', currency: 'USD', })
+		},
+
+		// IDK WTF
+		async createPaymentIntent(){
+			if(this.total < 0.5 || this.total > 9999999){
+				console.log("MONEY MISTAKE")
+				return
+			}
+			this.paymentIntent = await this.fetchFromAPI('payments', {body: {amount: this.total}})
+		},
+
+		//BUTTON ON WEBSITE GOES HERE
+		async payNow(e:Event){
+			e.preventDefault()
+			// eslint-disable-next-line
+			const CardNumberElement = this.elements.getElement('cardNumber')!;
+
+			const {paymentIntent: updatedPaymentIntent, error} = await this.stripe.confirmCardPayment(
+				// TODO Get this figured out
+				'secretTHING',
+				{
+					payment_method: { card: CardNumberElement }
+				}
+			)
+
+			if(error){
+				console.error(error)
+				// eslint-disable-next-line
+				this.paymentIntent = error.payment_intent!
+			}else{
+				// eslint-disable-next-line
+				this.paymentIntent = updatedPaymentIntent!
+			}
+		},
+
+		//HELPER FUNCTION
+		async fetchFromAPI(endPointUrl:string, opts:Record<string, unknown>){
+			// TODO GET API URL FROM FUNCTIONS
+			const API = ''
+			
+			const {method,body} = {method: 'POST', body:{}, ...opts}
+			
+			const res = await fetch(`${API}/${endPointUrl}`,{
+				method,
+				...(body && {body:JSON.stringify(body)}),
+				headers:{
+					'Content-Type': 'application/json'
+				}
+			})
+			console.log(res)
+			return res.json()
 		}
 	}
 })

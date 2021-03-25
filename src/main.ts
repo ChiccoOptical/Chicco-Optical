@@ -5,8 +5,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-//Import CSS????
+//Import CSS
 import './CSS/tailwind.css'
+// import './CSS/tailwindBUILD.css'
 import './CSS/static.css'
 
 import VueResource from "vue-resource";

@@ -1,25 +1,68 @@
 import * as functions from "firebase-functions";
 
 export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", {structuredData: true});
-  response.send("Hello from Firebase!");
+	functions.logger.info("Hello logs!", {structuredData: true});
+	response.send("Hello from Firebase!");
 });
 
-
+//EXPRESS AND SO ON
 import * as express from 'express'
+import {Request, Response, NextFunction} from 'express'
 import * as cors from 'cors'
 const app = express()
 app.use(cors({ origin: true }));
 
-export const payments = functions.https.onRequest(app)
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// });
 
-//
-//CHANGE WITH firebase functions:config:set stripe.secret=[ENTER SECRET KEY HERE]
+app.get('/test', (req, res) => {
+	res.send('yes!')
+});
+
+
+app.post('/intent', runAsync(async ({body}: Request, res:Response) => {
+	if(typeof(body.amount) != typeof(0) || typeof(body.currency) != typeof("")){
+		res.status(500).send('WRONG TYPES!')
+		return
+	}
+
+	console.log("create payment intent")
+	res.send(await createPaymentIntent(body.amount, body.currency))
+}));
+
+app.post('/deleteIntent', runAsync(async({body}: Request, res:Response) => {
+	console.log("cancel payment")
+	res.send(await stripe.paymentIntents.cancel(body.intentID, {
+		cancellation_reason: "abandoned"
+	}));
+}))
+
 import Stripe from 'stripe';
-const stripe = new Stripe('sk_test_51IXE3zJY5AEAzijm7vmdUygn26Le6VJIbZf9bwGKMc8zm1RZLivd5EvUgUJ6flMaYSppFf0dDZ9P89cTDZ5Toatg00WHoBa3Zl', {
-    apiVersion: "2020-08-27"  
+
+const stripe = new Stripe(functions.config().stripe.secret, {
+	apiVersion: "2020-08-27"  
 })
 
-stripe.balance
+// const runtime = require('../.runtimeconfig.json')
+// const stripe = new Stripe(runtime.stripe.secret, {
+// 	apiVersion: "2020-08-27"  
+// })
 
-///process.env.STRIPE_SECRET_KEY as string
+const createPaymentIntent = async (amount: number, currency: string) => {
+	return await stripe.paymentIntents.create({
+		amount,
+		currency,
+	})
+}
+
+
+export const payments = functions.https.onRequest(app)
+
+//HELPERS
+type appAction = (arg0: Request, arg1: Response, arg2: NextFunction) => any;
+function runAsync(callback:appAction){
+	return (req: Request, res: Response, next:NextFunction)=>{
+			callback(req, res, next).catch(next)
+	}
+}

@@ -1,5 +1,5 @@
 <template>
-	<nav class="fixed w-full z-30" style="box-shadow: rgb(0 0 0 / 25%) 0 -1px 28px;">
+	<nav class="fixed w-full z-40" style="box-shadow: rgb(0 0 0 / 25%) 0 -1px 28px;">
 		<div class="grid grid-cols-2 lg:grid-cols-9 px-2 lg:p-6 py-3 lg:py-3 w-full maxWidthPage">
 				<!-- START LOGO -->
 			<div class="debugBorder lg:col-span-2">

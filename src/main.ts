@@ -22,13 +22,6 @@ Vue.use(VueProgress, {})
 Vue.config.productionTip = false
 
 new Vue({
-  data() {
-    return {
-      glasses: [],
-      contacts: [],
-      sunglasses: [],
-    }
-  },
   router,
   store,
   render: h => h(App)

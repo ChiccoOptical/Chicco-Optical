@@ -204,7 +204,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	document.title = to.meta.title ? to.meta.title + " | Chicco Optical" : "Chicco Optical"
 	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description)
-	Vuex.state.routeLoaded = false;
+	Vuex.commit('routeLoaded', false);
 
 	if(to.meta.title == "Checkout" && Vuex.state.cart.length <= 0){
 		router.push('/')
@@ -213,7 +213,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach(()=>{
-	Vuex.state.routeLoaded = true;
+	Vuex.commit('routeLoaded', true);
 })
 
 export default router

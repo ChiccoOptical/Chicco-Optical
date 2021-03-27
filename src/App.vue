@@ -19,12 +19,12 @@
 		
 		<!-- SELECTOR BLACK BACKGROUND -->
 		<transition name="noEndfade">
-			<div v-if="selectorOpen" @mouseover="closeSelector()" class="fixed bg-black w-full h-full opacity-75 z-20"></div>
+			<div v-if="selectorOpen" @mouseover="closeSelector()" class="fixed bg-black w-full h-full opacity-75 z-30"></div>
 		</transition>
 		<!-- ========SELECTOR======== -->
 		<transition name="selectorSlide">
 			<!-- Selector holder -->
-			<div v-show="selectorOpen" class="popDown fixed bg-white w-full z-20" @click="closeSelector">
+			<div v-show="selectorOpen" class="popDown fixed bg-white w-full z-30" @click="closeSelector">
 				<!-- Selector Images and content on the inside + grid -->
 				<transition name="fade" mode="out-in">
 					<keep-alive>
@@ -37,7 +37,7 @@
 
 		<!-- CART -->
 		<transition name="noEndfade">
-			<div id="CARTBARBACKGROUND" @click="toggleCart()" v-if="cartOpen" class="fixed bg-black w-full h-full opacity-60 z-10"></div>
+			<div id="CARTBARBACKGROUND" @click="toggleCart()" v-if="cartOpen" class="fixed bg-black w-full h-full opacity-60 z-20"></div>
 		</transition>
 		<transition name="cartSlide">
 			<cart-bar v-if="cartOpen" id="CARTBAR" @toggle-cart="toggleCart"></cart-bar>
@@ -47,7 +47,17 @@
 		<div style="min-height:calc(100vh - 256px)">
 			<transition name="fade" mode="out-in">
 				<router-view v-if="this.$store.state.routeLoaded" :key="$route.path"/>
-				<div v-else class="h-screen w-full bg-blue-400"></div>
+				<div v-else class="h-screen w-full bg-blue-400 flex items-center justify-center">
+					<loading-progress
+						:progress="0"
+						:indeterminate="true"
+						size="128"
+						rotate
+						fillDuration="2"
+						rotationDuration="1"
+						class="mx-auto"
+					/>
+				</div>
 			</transition>
 		</div>
 

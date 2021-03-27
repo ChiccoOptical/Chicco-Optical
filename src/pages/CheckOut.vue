@@ -1,17 +1,21 @@
 <template>
 	<div>
 		<div style="height:72px"></div>
-		<div style="height:calc(100vh - 72px)">
+
+		<transition name="fade" mode="out-in">
+		<div style="height:calc(100vh - 72px)" v-if="this.page=='payment'" key="payment">
 			<div class="maxWidthPage grid grid-cols-5 h-full">
 				<!-- FIRST COLUMN -->
 				<div class="col-span-3 h-full py-20 px-16 flex flex-col">
-					<h1 class="text-2xl font-bold mb-4">Credit Card Details</h1>
+					<h1 class="text-2xl font-bold mb-4">Pay with Credit Card</h1>
 					<div id="card-number" class="border-2 p-2 rounded-md mb-2"></div>
 					<div class="flex flex-row gap-4">
 						<div id="card-expiry" class="border-2 flex-1 p-2 rounded-md"></div>
 						<div id="card-cvc" class="border-2 flex-1 p-2 rounded-md"></div>
 					</div>
-					<button @click="payNow">PAY NOW</button>
+					<button @click="payNowWithCard" :disabled="this.processing" class="p-4 bg-blue-400 disabled:opacity-50 transition-opacity rounded-lg font-bold text-2xl text-white mt-4 w-3/4 mx-auto focus:ring-4 ring-blue-200 noOutline">PAY NOW</button>
+
+					<canvas id="wechatQR"></canvas>
 				</div>
 
 				<!-- SECOND COLUMN -->
@@ -53,6 +57,11 @@
 				</div>
 			</div>
 		</div>
+
+		<div v-if="page=='success'" class='flex justify-center items-center' key="success">
+			<img src="https://media1.giphy.com/media/a0h7sAqON67nO/200.gif" alt="Success">
+		</div>
+		</transition>
 	</div>
 </template>
 
@@ -62,7 +71,9 @@ import product from '@/types/product'
 import {loadStripe} from '@stripe/stripe-js';
 
 //STRIPE TYPES for Typescript
-import {StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement, StripeElementStyle, Stripe, StripeElements} from '@stripe/stripe-js'
+import {StripeCardNumberElement, StripeCardExpiryElement, StripeCardCvcElement, StripeElementStyle, Stripe, StripeElements, PaymentIntent, SourceResult} from '@stripe/stripe-js'
+
+import QRCode from 'qrcode'
 
 export default Vue.extend({
 	name:"Checkout",
@@ -80,16 +91,20 @@ export default Vue.extend({
 
 			stripe:{} as Stripe,
 			elements: {} as StripeElements,
-			paymentIntent:{}
+			paymentIntent:{} as PaymentIntent | undefined,
+			thingy:{} as SourceResult,
+
+			processing:false,
+			page:'payment',
 		}
 	},
 	created(){
 		this.subtotal = this.$store.state.cart.reduce((acc:number, cur:product) => {return acc + cur.price}, 0)
-		this.taxes = this.subtotal * 0.13
+		this.taxes = Math.round(this.subtotal * 0.13 * 100) / 100
 		this.total = this.subtotal + this.taxes
 	},
 	async mounted(){
-		const stripeTEMP = await loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+		const stripeTEMP = await loadStripe('pk_test_51IXE3zJY5AEAzijm3OGvmcJ3bbhltgDPtIeyncJOS5QpDoLgje1k5Yhlu4mgkBTq9frLAhheD53R0M5CdlITtb9L00rDEjM4XV');
 		if(!stripeTEMP){
 			console.log("STRIPE LOADING ERROR")
 			return
@@ -121,51 +136,89 @@ export default Vue.extend({
 		this.cardCvc = this.elements.create('cardCvc', { style });
 		this.cardCvc.mount('#card-cvc');
 
-
 		this.createPaymentIntent()
+		this.weChat()
+	},
+	async beforeDestroy(){
+		if(!this.paymentIntent || !this.paymentIntent.id || this.paymentIntent.status == "succeeded"){
+			return
+		}
+		const deletedIntent = await this.fetchFromAPI('deleteIntent', {
+			body:{
+				intentID: this.paymentIntent.id
+			}
+		})
+		console.log('deleted intent', deletedIntent.id)
 	},
 	methods:{
-		format(num:number){
-			return num.toLocaleString('en-US', { style: 'currency', currency: 'USD', })
-		},
-
 		// IDK WTF
 		async createPaymentIntent(){
 			if(this.total < 0.5 || this.total > 9999999){
 				console.log("MONEY MISTAKE")
 				return
 			}
-			this.paymentIntent = await this.fetchFromAPI('payments', {body: {amount: this.total}})
+			this.paymentIntent = await this.fetchFromAPI('intent', {
+				body:{
+					amount: this.total * 100,
+					currency: "CAD"
+				}
+			})
+			if(!this.paymentIntent){console.error("Payment Intent Not Created");return}
+
+			console.log('payment intent created', this.paymentIntent.id)
 		},
-
 		//BUTTON ON WEBSITE GOES HERE
-		async payNow(e:Event){
-			e.preventDefault()
-			// eslint-disable-next-line
-			const CardNumberElement = this.elements.getElement('cardNumber')!;
+		async payNowWithCard(e:Event){
 
+			this.processing = true
+			e.preventDefault()
+			const CardNumberElement = this.elements.getElement('cardNumber');
+			if(!CardNumberElement || !this.paymentIntent || !this.paymentIntent.client_secret){console.error("MISSING DATA");return;}
+
+			console.log("paying with", this.paymentIntent.id)
 			const {paymentIntent: updatedPaymentIntent, error} = await this.stripe.confirmCardPayment(
-				// TODO Get this figured out
-				'secretTHING',
-				{
-					payment_method: { card: CardNumberElement }
+				this.paymentIntent.client_secret, {
+					payment_method: {
+						card: CardNumberElement
+					}
 				}
 			)
+			this.processing = false
 
 			if(error){
-				console.error(error)
-				// eslint-disable-next-line
-				this.paymentIntent = error.payment_intent!
-			}else{
-				// eslint-disable-next-line
-				this.paymentIntent = updatedPaymentIntent!
+				console.log("MAJOR ERROR")
+				console.table(error)
+				// TODO THIS MAY BE A TERRIBLE PRACTICE REVIEW LATER
+				this.paymentIntent = error.payment_intent
+			}
+			else{
+				this.paymentIntent = updatedPaymentIntent
+				//TODO Handle success
+				this.page = 'success'
 			}
 		},
 
-		//HELPER FUNCTION
+		async weChat(){
+			this.thingy = await this.stripe.createSource({
+				type:'wechat',
+				amount:100,
+				currency:"CAD"
+			})
+
+			const canvas = document.getElementById('wechatQR');
+
+			// eslint-disable-next-line
+			QRCode.toCanvas(canvas, this.thingy.source!.wechat!.qr_code_url!, (error) =>{
+				if (error){console.log(error);return}
+				console.log("success")
+			})
+			console.log(this.thingy)
+		},
+
+		//HELPER FUNCTIONS
 		async fetchFromAPI(endPointUrl:string, opts:Record<string, unknown>){
-			// TODO GET API URL FROM FUNCTIONS
-			const API = ''
+			// TODO GET API URL FROM FUNCTION
+			const API = 'http://localhost:5001/chicco-optical/us-central1/payments'
 			
 			const {method,body} = {method: 'POST', body:{}, ...opts}
 			
@@ -176,9 +229,11 @@ export default Vue.extend({
 					'Content-Type': 'application/json'
 				}
 			})
-			console.log(res)
 			return res.json()
-		}
+		},
+		format(num:number){
+			return num.toLocaleString('en-US', { style: 'currency', currency: 'USD', })
+		},
 	}
 })
 </script>

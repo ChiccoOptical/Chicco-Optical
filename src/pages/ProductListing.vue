@@ -4,7 +4,7 @@
             <div class="relative h-full">
                 <!-- BACK BUTTON -->
                 <svg
-                    @click="$router.go(-1)"
+                    @click="upOneLevel"
                     class="cursor-pointer absolute h-12 w-auto rounded-lg bg-white z-10"
                     style="top:100px"
                     id="backButton"
@@ -116,6 +116,13 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
         },
         addCart(){
             this.$store.commit('addToCart', this.product)
+        },
+        upOneLevel(){
+            let upperPath = this.$route.path.split("/")
+            if(upperPath.length > 0) {
+                upperPath.splice(upperPath.length-1)
+                this.$router.push(upperPath.join("/"))
+            }
         }
     },
     created(){
@@ -130,7 +137,7 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
             this.product = data
             this.loaded = true;
         }).catch(()=>{
-            this.$router.replace("./");
+            this.upOneLevel()
         })
     },
 })

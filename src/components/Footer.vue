@@ -5,7 +5,7 @@
             <!-- Pages -->
             <div class="col-span-5 row-span-1 flex flex-col gap-y-4 lg:flex-row lg:gap-0 justify-between lg:pr-8 text-center lg:text-left mb-6 lg:mb-0">
                 <div>
-                    <h1>Chicco Optical</h1>
+                    <h1>Newstar Optical</h1>
                     <h3>Jun Liu</h3>
                 </div>
                 <div>
@@ -63,8 +63,8 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue'
-    export default Vue.extend({
+    import {defineComponent} from 'vue'
+    export default defineComponent({
         name:'Footer'
     })
 </script>

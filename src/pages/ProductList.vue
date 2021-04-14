@@ -9,8 +9,10 @@
                 <h3 class="capitalize">{{gender}}</h3>    
             </div>
         </div>
+
+        <div class="bg-white w-5/6 mx-auto">
         <transition name="fade" mode="out-in">
-            <div class="bg-white maxWidthPage flex items-center justify-center h-screen/2" v-if="!loaded">
+            <div key="loading" class="flex items-center justify-center h-screen/2" v-if="!loaded">
                 <loading-progress
                     :progress="0"
                     :indeterminate="true"
@@ -21,7 +23,7 @@
                     class="mx-auto"
                 />
             </div>
-            <div class="bg-white p-6 pt-8 grid grid-cols-3 gap-10 maxWidthPage w-5/6" v-if="loaded">
+            <div key="loaded" class="px-10 py-12 grid grid-cols-3 gap-10" v-else-if="loaded">
                 <item-card
                     v-for="(item, index) in productList"
                     :key="index"
@@ -29,6 +31,7 @@
                 ></item-card>
             </div>
         </transition>
+        </div>
     </div>
 
     <!-- GENDER SELECTOR ON /glasses, /contactlenses, /sunglasses -->
@@ -55,34 +58,32 @@
 
     
     // MIXING ACTIVITY
-    import mixins from 'vue-typed-mixins'
     import getProductsMixin from '../mixins/getProduct'
+    import Product from '../types/product';
+    import {defineComponent} from 'vue';
+    import { useRoute } from 'vue-router'
+    const router = useRoute()
 
-
-    export default mixins(getProductsMixin).extend({
+    export default defineComponent({
         name:'ProductList',
+        mixins:[getProductsMixin],
         components:{
             'item-card': ()=>import(/*webpackChunkName: "itemcard"*/ '@/components/itemCard.vue'),
         },
-        data(){
-            return{
+        data:() => {
+            return {
                 productList:[] as product[],
-                productType:this.$route.path.slice(1).split("/")[0],
-                gender:this.$route.path.slice(1).split("/")[1],
+                productType: router.path.slice(1).split("/")[0],
+                gender: router.path.slice(1).split("/")[1],
                 loaded:false,
-            }
+            };
         },
         created(){
             if(!this.gender){
                 return
             }
-            this.getAllProducts(this.productType, this.gender).then(productList =>{
+            this.getAllProducts(this.productType, this.gender).then((productList: Product[]) =>{
                 this.productList = productList
-
-                //load all the images in
-                for(const productItem in productList as product[]){
-                    new Image().src = productList[productItem].imageURL
-                }
                 this.loaded = true;
             })
         }

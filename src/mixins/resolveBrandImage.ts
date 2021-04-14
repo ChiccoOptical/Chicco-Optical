@@ -1,7 +1,7 @@
-import Vue from 'vue'
+import {defineComponent} from 'vue'
 import {brand} from '../types/product'
 
-export default Vue.extend({
+export default defineComponent({
     methods:{
         resolveBrandImage: function(brandName: brand): string{
             const resolveObject = {

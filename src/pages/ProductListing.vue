@@ -91,19 +91,21 @@
 
 <script lang="ts">
 import product from '@/types/product'
+import {defineComponent} from 'vue'
 
-import mixins from 'vue-typed-mixins'
 import getProductMixin from '@/mixins/getProduct'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
 
 import colorPods from '@/components/colourPods.vue'
+import Product from '@/types/product'
 
-export default mixins(getProductMixin, resolveBrandImage).extend({
+export default defineComponent({
     name:'Product-Listing',
+    mixins:[getProductMixin, resolveBrandImage],
     components:{
         'color-pods':colorPods
     },
-    data(){
+    data: () => {
         return{
             product:{} as product,
             imageLoaded:false,
@@ -132,8 +134,7 @@ export default mixins(getProductMixin, resolveBrandImage).extend({
         const productType = this.$route.path.slice(1).split("/")[0]
         const gender = this.$route.path.slice(1).split("/")[1]
         const id = this.$route.params.id
-
-        this.getProductByID(id, productType, gender).then(data=>{
+        this.getProductByID(id as string, productType, gender).then((data: Product)=>{
             this.product = data
             this.loaded = true;
         }).catch(()=>{

@@ -1,87 +1,50 @@
 {
-  "name": "chicco-optical-vue",
+  "name": "newstar-optical-3",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "Build-Tailwind": "npx tailwindcss build ./src/CSS/tailwind.css -o ./src/CSS/tailwindBUILD.css",
-    "Deploy-Firebase": "firebase deploy"
+    "deploy": "vue-cli-service build && firebase deploy --only hosting:newstar-optical",
+    "deploy-only": "firebase deploy --only hosting:newstar-optical"
   },
   "dependencies": {
-    "@stripe/stripe-js": "^1.13.1",
-    "@tailwindcss/postcss7-compat": "^2.0.2",
-    "autoprefixer": "^9",
-    "core-js": "^3.9.1",
-    "firebase": "^8.2.10",
-    "lozad": "^1.16.0",
-    "nprogress": "^0.2.0",
-    "postcss": "^7",
-    "postcss-loader": "^5.1.0",
+    "@stripe/stripe-js": "^1.13.2",
+    "core-js": "^3.6.5",
+    "firebase": "^8.4.1",
     "qrcode": "^1.4.4",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
-    "vue": "^2.6.12",
-    "vue-progress-path": "0.0.2",
-    "vue-property-decorator": "^10.0.0-rc.2",
+    "vue": "^3.0.0",
     "vue-resource": "^1.5.2",
-    "vue-router": "^3.5.1",
+    "vue-router": "^4.0.0-0",
     "vue-the-mask": "^0.11.1",
     "vue-typed-mixins": "^0.2.0",
-    "vuefire": "^2.2.5",
-    "vuex": "^3.6.2",
-    "vuex-persistedstate": "^4.0.0-beta.3"
+    "vuex": "^4.0.0-0",
+    "vuex-persistedstate": "*"
   },
   "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.4",
-    "@types/lozad": "^1.9.0",
+    "@tailwindcss/postcss7-compat": "^2.1.0",
     "@types/qrcode": "^1.4.0",
     "@types/vue-the-mask": "^0.11.1",
-    "@typescript-eslint/eslint-plugin": "^4.16.1",
-    "@typescript-eslint/parser": "^4.16.1",
-    "@vue/cli-plugin-babel": "^4.5.11",
-    "@vue/cli-plugin-eslint": "^4.5.11",
-    "@vue/cli-plugin-router": "^4.5.11",
-    "@vue/cli-plugin-typescript": "^4.5.11",
-    "@vue/cli-plugin-vuex": "^4.5.11",
-    "@vue/cli-service": "^4.5.11",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-typescript": "^7.0.0",
     "autoprefixer": "^9.8.6",
-    "eslint": "^7.21.0",
-    "eslint-plugin-vue": "^7.7.0",
-    "lint-staged": "^10.5.4",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "lint-staged": "^9.5.0",
     "postcss": "^7.0.35",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4",
-    "typescript": "^4.2.3",
-    "vue-cli-plugin-tailwind": "~2.0.6",
-    "vue-template-compiler": "^2.6.12"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.0",
+    "typescript": "~4.1.5",
+    "vue-cli-plugin-tailwind": "~2.0.6"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/typescript/recommended"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "rules": {}
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {},
-      "tailwindcss": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },

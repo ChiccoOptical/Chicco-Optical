@@ -20,7 +20,15 @@ interface Product{
     imageURL: string;
 }
 
+interface ProductOrder{
+    title: string;
+    model:string;
+    price: number;
+    id: string;
+    imageURL: string;
+}
+
 type brand = "dior" | "silhouette" | "rayband"
 
-export {brand};
+export {brand, ProductOrder};
 export default Product;

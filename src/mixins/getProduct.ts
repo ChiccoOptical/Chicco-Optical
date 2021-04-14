@@ -1,5 +1,5 @@
 // VUE
-import Vue from 'vue'
+import {defineComponent} from 'vue'
 
 // FIREACTIVITIES
 import db from '../firebase'
@@ -9,8 +9,8 @@ import 'firebase/storage';
 import product from '../types/product'
 
 
-export default Vue.extend({
-    data(){
+export default defineComponent({
+    data: () => {
         return{
             tFrameColour:{} as Record<string, string>,
             tLensColour:{} as Record<string, string>

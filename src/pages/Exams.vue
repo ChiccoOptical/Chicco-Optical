@@ -65,13 +65,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {defineComponent} from 'vue'
 import {mask} from 'vue-the-mask'
 import db from '../firebase'
 
-export default Vue.extend({
+export default defineComponent({
     directives: {mask},
-    data(){
+    data: () => {
         return{
             name:'',
             email:'',

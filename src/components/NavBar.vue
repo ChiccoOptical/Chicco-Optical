@@ -22,13 +22,13 @@
 					lg:relative lg:bg-transparent lg:w-auto lg:gap-0 lg:py-0 lg:text-xl lg:flex-row lg:top-0 
 					"
 				>
-					<router-link class="noOutline" @mouseover.native="closeNav()"  to="/">Home</router-link>
-					<router-link class="noOutline itemPage" @mouseover.native="openNav('frames')" @click.native="closeNav()" to="/frames">Frames</router-link>
-					<router-link class="noOutline itemPage" @mouseover.native="openNav('sunglasses')" @click.native="closeNav()" to="/sunglasses">Sunglasses</router-link>
-					<router-link class="noOutline itemPage" @mouseover.native="closeNav()" to="/lenses">Lenses</router-link>
-					<router-link class="noOutline itemPage" @mouseover.native="closeNav()" to="/contactlenses">Contact Lenses</router-link>
-					<router-link class="noOutline" @mouseover.native="closeNav()"  to="/exams">Eye Exams</router-link>
-					<router-link class="noOutline" @mouseover.native="closeNav()"  to="/contact">Contact Us</router-link>
+					<router-link class="noOutline" @mouseover="closeNav()"  to="/">Home</router-link>
+					<router-link class="noOutline itemPage" @mouseover="openNav('frames')" @click="closeNav()" to="/frames">Frames</router-link>
+					<router-link class="noOutline itemPage" @mouseover="openNav('sunglasses')" @click="closeNav()" to="/sunglasses">Sunglasses</router-link>
+					<router-link class="noOutline itemPage" @mouseover="closeNav()" to="/lenses">Lenses</router-link>
+					<router-link class="noOutline itemPage" @mouseover="closeNav()" to="/contactlenses">Contact Lenses</router-link>
+					<router-link class="noOutline" @mouseover="closeNav()"  to="/exams">Eye Exams</router-link>
+					<router-link class="noOutline" @mouseover="closeNav()"  to="/contact">Contact Us</router-link>
 				</div>
 			</transition>
 
@@ -37,8 +37,8 @@
 				<svg @click="$emit('toggle-cart')" class="h-8 w-8 cursor-pointer transition-opacity duration-200" :class="{'cursor-not-allowed': navOpen, 'opacity-50': navOpen}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
 				<div 
 					class="h-5 w-5 text-white flex items-center justify-center leading-none text-xs bg-red-500 absolute rounded-full bottom-0"
-					id="bubble" v-if="this.$store.state.cart.length > 0">
-					{{this.$store.state.cart.length}}
+					id="bubble" v-if="$store.state.cart.length > 0">
+					{{$store.state.cart.length}}
 				</div>
 			</div>
 		</div>
@@ -46,11 +46,11 @@
 </template>
 
 <script lang="ts">
-	import Vue from 'vue'
-	export default Vue.extend({
+	import {defineComponent} from 'vue'
+	export default defineComponent({
 		name:'NavBar',
 		props:['navOpen'],
-		data(){
+		data: () => {
 			return{
 				windowWidth: window.innerWidth,
 			}
@@ -60,7 +60,7 @@
 				window.addEventListener('resize', this.onResize);
 			})
 		},
-		beforeDestroy() { 
+		beforeUnmount() { 
 			window.removeEventListener('resize', this.onResize); 
 		},
 		methods: {  
@@ -89,15 +89,49 @@
 		user-select: none; /* Standard */
 	}
 	@keyframes pop{
-    0.0%{
-        transform: scale(0);
-    }
-	80%{
-        transform: scale(1.2);
-    }
-    100%{
-        transform: scale(1);
-    }
-}
+		0.0%{
+			transform: scale(0);
+		}
+		80%{
+			transform: scale(1.2);
+		}
+		100%{
+			transform: scale(1);
+		}
+	}
 
+	nav{
+		overflow: hidden;
+	}
+	nav::before {
+		content: '';
+		position: absolute;
+		background-color: #eeeeeec2;
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		backdrop-filter: blur(2px);
+		transform: scale(1.7);
+	}
+
+	.router-link-exact-active,
+	#navLinkRow a:hover {
+		color: black !important;
+	}
+
+	#navLinkRow a {
+		color: #8b8b8b;
+		transition: color .1s ease;
+	}
+
+	.router-link-active.itemPage {
+		color: black !important;
+	}
+
+	.popDown {
+		top: 72px;
+		height: auto;
+		opacity: 1;
+		transform: translateY(0);
+	}
 </style>

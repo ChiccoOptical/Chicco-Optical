@@ -1,9 +1,10 @@
-import { firestorePlugin } from 'vuefire';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import Vue from 'vue'
+//VUEFIRE WHEN SUPPORTED
+// import { firestorePlugin } from 'vuefire';
+// Vue.use(firestorePlugin);
 
-Vue.use(firestorePlugin);
+
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: "AIzaSyChs5cKMvj26dtSY7B8DNw5g0acnqujqLU",
@@ -12,9 +13,9 @@ const firebaseConfig = {
     projectId: "chicco-optical",
     storageBucket: "chicco-optical.appspot.com",
     messagingSenderId: "786905969886",
-    appId: "1:786905969886:web:23fd4f3beb705ad7adbe4f",
-    measurementId: "G-N5TW8ERR5Z"
-}
+    appId: "1:786905969886:web:cea1f4835e2e3cbfadbe4f",
+    measurementId: "G-KEM1FMXPV0"
+};
 
 
 const db = firebase.initializeApp(firebaseConfig);

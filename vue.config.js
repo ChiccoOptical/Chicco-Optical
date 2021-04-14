@@ -1,6 +1,10 @@
-// vue.config.js
+//vue.config.js
 module.exports = {
-    configureWebpack: {
-        devtool: 'source-map',
-    },
+	lintOnSave:false,
+	configureWebpack: {
+		devtool: 'source-map',
+	},
+	css:{
+		sourceMap: true
+	}
 }

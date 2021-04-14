@@ -8,7 +8,7 @@
 			:key="i"
 		>
 			<!-- ACTUAL IMAGERY -->
-			<img :src="imageByType[glassesType][category]" :alt="category" class="w-full" key=1 :class="{'forceSize':glassesType == 'none'}">
+			<img :src="imageByType[glassesType][category]" style="aspect-ratio:709 / 472; object-fit:cover" :alt="category" class="w-full" key=1>
 
 			<!-- LABEL -->
 			<p class="absolute verticalCenter" v-if="glassesType != 'none'">Shop {{category.charAt(0).toUpperCase() + category.slice(1)}}s</p>
@@ -18,11 +18,11 @@
 </template>
 
 <script lang="ts">
-	import Vue from 'vue'
+	import {defineComponent} from 'vue'
 
-	export default Vue.extend({
+	export default defineComponent({
 		props:{'glassesType': String},
-		data(){
+		data: () => {
 			return{
 				imageByType:{
 					frames:{

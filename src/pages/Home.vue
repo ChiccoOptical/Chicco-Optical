@@ -2,10 +2,8 @@
 	<div>
 		<!-- TOP BANENR -->
 		<div class="lg:h-screen bg-blue-400 pt-16 lg:p-0">
-			<div class="maxWidthPage h-full relative">
-				<transition name="fade" appear>
-					<img class="relative lg:absolute bottom-0 horizontalCenter homePic" src="@/assets/External/dior-GOLD-Diorstellaire04.png" />
-				</transition>
+			<div id="banner" class="maxWidthPage h-full relative">
+				<img id="mainImage" style="display:none" class="relative lg:absolute bottom-0 horizontalCenter homePic" src="@/assets/External/dior-GOLD-Diorstellaire04.png"/>
 				
 				<div id="mainText" class="bg-white lg:bg-transparent p-2 lg:p-0 flex flex-col items-center lg:block lg:absolute onlyVerticalCenter w-full lg:w-1/3">
 					<p class="uppercase font-semibold">C<small>hicco</small> O<small>ptical</small></p>
@@ -80,13 +78,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import {defineComponent} from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
 	name:'Home',
 	methods:{
 		goExams(): void{
 			this.$router.push('exams')
+		}
+	},
+	mounted(){
+		const image = new Image();
+		image.src = require('@/assets/External/dior-GOLD-Diorstellaire04.png')
+		image.onload = () => {
+			document.getElementById('mainImage')!.style.display = ""
 		}
 	}
 })
@@ -142,5 +147,15 @@ export default Vue.extend({
 	}
 	.productRowHome div h2{
 		white-space:nowrap;
+	}
+
+
+
+	@keyframes imageLoad{
+		from {opacity:0;}
+		to {opacity:1;}
+	}
+	#mainImage{
+		animation: 0.5s ease imageLoad;
 	}
 </style>

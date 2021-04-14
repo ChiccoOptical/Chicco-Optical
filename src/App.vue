@@ -46,7 +46,7 @@
 		<!-- ========CONTENT======== -->
 		<div style="min-height:calc(100vh - 256px)">
 			<transition name="fade" mode="out-in">
-				<router-view v-if="this.$store.state.routeLoaded" :key="$route.path"/>
+				<router-view v-if="$store.state.routeLoaded" :key="$route.path"/>
 				<div v-else class="h-screen w-full bg-blue-400 flex items-center justify-center">
 					<loading-progress
 						:progress="0"
@@ -67,7 +67,7 @@
 </template>
 
 <script lang="ts">
-	import Vue from 'vue'
+	import {defineComponent} from 'vue'
 	import navBar from '@/components/NavBar.vue'
 	import footer from '@/components/Footer.vue'
 	import framesSelectorGender from '@/components/selectorGenders/frames.vue'
@@ -75,7 +75,7 @@
 	import noneSelectorGender from '@/components/selectorGenders/none.vue'
 	import CartSideBarVue from './components/CartSideBar.vue'
 	
-	export default Vue.extend({
+	export default defineComponent({
 		name:'app',
 		components:{
 			'selector-gender-frames' : framesSelectorGender,
@@ -85,7 +85,7 @@
 			'my-footer' : footer,
 			'cart-bar': CartSideBarVue
 		},
-		data(){
+		data: () => {
 			return{
 				selectorOpen:false,
 				selectorType:"none",
@@ -113,3 +113,12 @@
 		}
 	})
 </script>
+
+<style scoped>
+	.popDown {
+		top: 72px;
+		height: auto;
+		opacity: 1;
+		transform: translateY(0);
+	}
+</style>

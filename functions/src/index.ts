@@ -9,27 +9,31 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 import * as express from 'express'
 import {Request, Response, NextFunction} from 'express'
 import * as cors from 'cors'
+import Stripe from 'stripe';
+
+
+const stripe = new Stripe(functions.config().stripe.secret, {
+	apiVersion: "2020-08-27"
+})
 const app = express()
 app.use(cors({ origin: true }));
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// });
 
 app.get('/test', (req, res) => {
 	res.send('yes!')
 });
 
-
 app.post('/intent', runAsync(async ({body}: Request, res:Response) => {
-	if(typeof(body.amount) != typeof(0) || typeof(body.currency) != typeof("")){
+	const {amount, currency, payment_method_types} = body
+	if(typeof(amount) != typeof(0) || typeof(currency) != typeof("")){
 		res.status(500).send('WRONG TYPES!')
 		return
 	}
-
 	console.log("create payment intent")
-	res.send(await createPaymentIntent(body.amount, body.currency))
+	const PI = await stripe.paymentIntents.create({ amount, currency, payment_method_types })
+	res.send(PI)
 }));
+
 
 app.post('/deleteIntent', runAsync(async({body}: Request, res:Response) => {
 	console.log("cancel payment")
@@ -38,25 +42,7 @@ app.post('/deleteIntent', runAsync(async({body}: Request, res:Response) => {
 	}));
 }))
 
-import Stripe from 'stripe';
-
-const stripe = new Stripe(functions.config().stripe.secret, {
-	apiVersion: "2020-08-27"  
-})
-
-// const runtime = require('../.runtimeconfig.json')
-// const stripe = new Stripe(runtime.stripe.secret, {
-// 	apiVersion: "2020-08-27"  
-// })
-
-const createPaymentIntent = async (amount: number, currency: string) => {
-	return await stripe.paymentIntents.create({
-		amount,
-		currency,
-	})
-}
-
-
+// PAYMENTS
 export const payments = functions.https.onRequest(app)
 
 //HELPERS

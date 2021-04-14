@@ -1,17 +1,14 @@
-import Vue from 'vue'
 import Vuex from '@/store'
 
 // VUE ROUTER
-import VueRouter, { RouteConfig } from 'vue-router'
-Vue.use(VueRouter)
+import { createRouter, createWebHistory, RouteRecordRaw} from "vue-router"
 
 // PAGES
-import Home from '../pages/Home.vue'
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: 'Home',
-		component: Home,
+		component: () => import(/* webpackChunkName: "home" */ '../pages/Home.vue'),
 		meta:{
 			title:'Home'
 		}
@@ -57,6 +54,14 @@ const routes: Array<RouteConfig> = [
 		component: () => import('../pages/CheckOut.vue'),
 		meta: {
 			title: 'Checkout'
+		}
+	},
+	{
+		path: '/paymentverify',
+		name: 'Payment Verification Page',
+		component: () => import('../pages/PaymentVerify.vue'),
+		meta:{
+			title: "Verify"
 		}
 	},
 
@@ -185,7 +190,7 @@ const routes: Array<RouteConfig> = [
 
 	// 404 PAGE
 	{
-		path: "*", component: () => import('../pages/PageNotFound.vue'),
+		path: '/:pathMatch(.*)*', component: () => import('../pages/PageNotFound.vue'),
 		meta: {
 			title: '404'
 		}
@@ -193,17 +198,17 @@ const routes: Array<RouteConfig> = [
 ]
 
 // APPLY AND EXPORT
-const router = new VueRouter({
+const router = createRouter({
+	history: createWebHistory(process.env.BASE_URL),
 	routes,
-	mode:'history',
 	scrollBehavior() {
         window.scrollTo(0, 0);
     }
 })
 
 router.beforeEach((to, from, next) => {
-	document.title = to.meta.title ? to.meta.title + " | Chicco Optical" : "Chicco Optical"
-	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description)
+	document.title = to.meta.title ? to.meta.title + " | Newstar Optical" : "Newstar Optical"
+	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description as string)
 	Vuex.commit('routeLoaded', false);
 
 	if(to.meta.title == "Checkout" && Vuex.state.cart.length <= 0){

@@ -3,7 +3,7 @@
   "scripts": {
     "lint": "eslint --ext .ts .",
     "build": "tsc",
-    "runtimeSecrets":"firebase functions:config:get | Add-Content .runtimeconfig.json",
+    "runtimeSecrets": "firebase functions:config:get | Add-Content .runtimeconfig.json",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",

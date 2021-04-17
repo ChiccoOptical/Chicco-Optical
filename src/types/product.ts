@@ -21,11 +21,9 @@ interface Product{
 }
 
 interface ProductOrder{
-    title: string;
-    model:string;
-    price: number;
     id: string;
-    imageURL: string;
+    gender: string;
+    productType: string;
 }
 
 type brand = "dior" | "silhouette" | "rayband"

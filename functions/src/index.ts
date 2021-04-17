@@ -5,6 +5,13 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 	response.send("Hello from Firebase!");
 });
 
+//TYPES 
+interface ProductOrder {
+	title: string;
+	price: number;
+	id: string;
+}
+
 //EXPRESS AND SO ON
 import * as express from 'express'
 import {Request, Response, NextFunction} from 'express'
@@ -24,13 +31,15 @@ app.get('/test', (req, res) => {
 });
 
 app.post('/intent', runAsync(async ({body}: Request, res:Response) => {
-	const {amount, currency, payment_method_types} = body
+	const {amount, currency, payment_method_types, metadata} = body
 	if(typeof(amount) != typeof(0) || typeof(currency) != typeof("")){
 		res.status(500).send('WRONG TYPES!')
 		return
 	}
 	console.log("create payment intent")
-	const PI = await stripe.paymentIntents.create({ amount, currency, payment_method_types })
+
+	metadata.cart.map((obj: ProductOrder) => JSON.stringify(obj))
+	const PI = await stripe.paymentIntents.create({ amount, currency, payment_method_types, metadata: metadata.cart.map((obj:ProductOrder) => JSON.stringify(obj))})
 	res.send(PI)
 }));
 
@@ -42,6 +51,15 @@ app.post('/deleteIntent', runAsync(async({body}: Request, res:Response) => {
 	}));
 }))
 
+app.post('/getCart', runAsync(async({body}: Request, res:Response)=>{
+	const a = await stripe.paymentIntents.retrieve(body.id)
+	const temp = []
+	for(const i in a.metadata){
+		temp.push(a.metadata[i])
+	}
+	res.send(temp)
+}))
+
 // PAYMENTS
 export const payments = functions.https.onRequest(app)
 
@@ -49,6 +67,6 @@ export const payments = functions.https.onRequest(app)
 type appAction = (arg0: Request, arg1: Response, arg2: NextFunction) => any;
 function runAsync(callback:appAction){
 	return (req: Request, res: Response, next:NextFunction)=>{
-			callback(req, res, next).catch(next)
+		callback(req, res, next).catch(next)
 	}
 }

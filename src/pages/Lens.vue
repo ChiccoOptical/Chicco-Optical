@@ -168,7 +168,7 @@
 import {defineComponent} from 'vue'
 export default defineComponent({
 	name:"lenses",
-	data: () => {
+	data: (vm) => {
 		return{
 			treatments:[
 				{
@@ -355,6 +355,9 @@ export default defineComponent({
 	}
 	.lensTable tr:nth-child(2n){
 		background-color: #9c9c9c57;
+	}
+	.lensRoot{
+		scroll-padding: 1rem 0 0 0;
 	}
 
 </style>

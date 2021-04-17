@@ -50,7 +50,7 @@
 	export default defineComponent({
 		name:'NavBar',
 		props:['navOpen'],
-		data: () => {
+		data: (vm) => {
 			return{
 				windowWidth: window.innerWidth,
 			}
@@ -106,7 +106,7 @@
 	nav::before {
 		content: '';
 		position: absolute;
-		background-color: #eeeeeec2;
+		background-color: #eeeeeed2;
 		width: 100%;
 		height: 100%;
 		z-index: -1;

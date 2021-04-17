@@ -1,7 +1,6 @@
 /* FONT */
 @import url('https://fonts.googleapis.com/css?family=Lora');
 @import url('https://fonts.googleapis.com/css?family=Rubik');
-@import url('./animations.css');
 
 /* #region  SEARCH BOX */
 .search {
@@ -128,6 +127,7 @@ body::-webkit-scrollbar {
 body::-webkit-scrollbar-thumb {
     background: #b3b3b3;
     border-radius: 10px;
+    border: 4px solid rgba(0, 0, 0, 0);
 }
 
 body::-webkit-scrollbar-thumb:hover {
@@ -200,7 +200,7 @@ body {
 /* #endregion */
 
 /* #region  Gender Selector Background */
-.genderSelectorBackground::before { 
+.genderSelectorBackground::before {
     content: "";
     position: absolute;
     height: 100%;

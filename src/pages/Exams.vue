@@ -71,7 +71,7 @@ import db from '../firebase'
 
 export default defineComponent({
     directives: {mask},
-    data: () => {
+    data: (vm) => {
         return{
             name:'',
             email:'',
@@ -197,7 +197,7 @@ export default defineComponent({
 
         opacity:1;
     }
-    .error-enter,
+    .error-enter-from,
     .error-leave-to{
         position:absolute;
         top:75%;

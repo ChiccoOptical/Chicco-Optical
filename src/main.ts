@@ -1,4 +1,4 @@
-import Vue, { createApp } from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue'
 
 // Feature Import
@@ -9,6 +9,7 @@ import store from './store'
 import './CSS/tailwind.css'
 // import './CSS/tailwindBUILD.css'
 import './CSS/static.css'
+import './CSS/animations.css'
 
 // VUE RESOURCE
 // import VueResource from "vue-resource";

@@ -105,7 +105,7 @@ export default defineComponent({
     components:{
         'color-pods':colorPods
     },
-    data: () => {
+    data: (vm) => {
         return{
             product:{} as product,
             imageLoaded:false,
@@ -153,7 +153,7 @@ export default defineComponent({
     }
 
     /* IMAGE TRANSITION */
-    .imageShow-enter,
+    .imageShow-enter-from,
     .imageShow-leave-to{
         opacity: 0;
         transform: translateY(calc(-50% + 1rem));
@@ -169,7 +169,7 @@ export default defineComponent({
     }
 
     /* TITLE TRANSITION */
-    .titleShow-enter,
+    .titleShow-enter-from,
     .titleShow-leave-to{
         opacity: 0;
         transform: translateY(1rem);

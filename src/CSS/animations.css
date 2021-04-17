@@ -1,36 +1,16 @@
-/* SELECTOR SLIDE */
-.selectorSlide-enter-active,
-.selectorSlide-leave-active {
-    transition-duration: .25s;
-    transition-timing-function: ease;
-    transition-property: transform, opacity;
-}
-
-.selectorSlide-enter,
-.selectorSlide-leave-to {
-    transform: translateY(-10%);
-    opacity: 0;
-}
-
-.selectorSlide-enter,
-.selectorSlide-leave-to {
-    opacity: 0;
-}
-
-
 /* FADE */
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity .5s;
 }
 
-.fade-enter,
+.fade-enter-from,
 .fade-leave-to {
     opacity: 0;
 }
 
 .fade-enter-to,
-.fade-leave {
+.fade-leave-from {
     opacity: 1;
 }
 
@@ -41,7 +21,7 @@
 
 
 /* NOENDFADE */
-.noEndfade-enter,
+.noEndfade-enter-from,
 .noEndfade-leave-to {
     opacity: 0;
 }
@@ -49,4 +29,22 @@
 .noEndfade-enter-active,
 .noEndfade-leave-active {
     transition: all .2s ease;
+}
+
+/* CART SLIDE */
+.cartSlide-enter-active,
+.cartSlide-leave-active {
+    transition: all 0.25s ease;
+}
+
+.cartSlide-enter-from,
+.cartSlide-leave-to {
+    transform: translateX(20%);
+    opacity: 0;
+}
+
+.cartSlide-enter-to,
+.cartSlide-leave-from{
+    transform: translateX(0);
+    opacity: 1;
 }

@@ -19,28 +19,36 @@
 
 <script lang="ts">
 	import {defineComponent} from 'vue'
+	//TAKE THAT GOD
+	interface yeet{
+		[key: string]:{
+			[key: string]: string
+		}
+	}
 
 	export default defineComponent({
-		props:{'glassesType': String},
-		data: () => {
+		props:{
+			'glassesType': { type: String, required: true },
+		},
+		data: (vm) => {
 			return{
 				imageByType:{
-					frames:{
-						men: require("@/assets/nav/framesmen.jpg"),
-						women: require("@/assets/nav/frameswomen.jpg"),
-						children: require("@/assets/nav/frameschildren.png")
+					'frames':{
+						'men': require("@/assets/nav/framesmen.jpg"),
+						'women': require("@/assets/nav/frameswomen.jpg"),
+						'children': require("@/assets/nav/frameschildren.png")
 					},
-					sunglasses:{
-						men: require("@/assets/nav/sunglassesmen.jpg"),
-						women: require("@/assets/nav/sunglasseswomen.jpg"),
-						children: require("@/assets/nav/sunglasseschildren.png")
+					'sunglasses':{
+						'men': require("@/assets/nav/sunglassesmen.jpg"),
+						'women': require("@/assets/nav/sunglasseswomen.jpg"),
+						'children': require("@/assets/nav/sunglasseschildren.png")
 					},
-					none:{
-						men: require('@/assets/nav/Transparent.png'),
-						women: require('@/assets/nav/Transparent.png'),
-						children: require('@/assets/nav/Transparent.png')
+					'none':{
+						'men': require('@/assets/nav/Transparent.png'),
+						'women': require('@/assets/nav/Transparent.png'),
+						'children': require('@/assets/nav/Transparent.png')
 					}
-				}
+				} as yeet
 			}
 		},
 		created(){

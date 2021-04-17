@@ -1,8 +1,7 @@
 <template>
-    <router-link :to="$router.currentRoute + '/' +  product.id" class="flex items-end">
-    <div class="p-6 text-center cursor-pointer relative">
+    <router-link :to="this.$route.fullPath + '/' +  product.id" class="flex items-end">
+    <div class="p-6 text-center cursor-pointer relative w-full h-full">
         <!-- PRODUCT -->
-        <!-- TODO GET THIS SHIT LOADED BETTER -->
         <img class="w-full" :src="product.imageURL" alt="IMAGE NOT FOUND" style="z-index:1;aspect-ratio:381 / 162;object-fit:contain">
 
         <!-- BRAND BACKGROUND -->
@@ -10,14 +9,6 @@
 
         <!-- TITLE -->
         <h1 class="text-4xl mt-4 font-bold">{{ product.title }}</h1>
-        <!-- <div class="flex flex-row gap-x-3 justify-center mt-3">
-            <div id="colorPods"
-            class="h-5 w-5 rounded-full overflow-hidden flex flex-row relative" 
-            v-for="(colorIndex, index) in product.frameColours" :key="index">
-                <div class="h-full w-1/2" :style="'background-color:' + product.frameColours[index]"></div>
-                <div class="h-full w-1/2" :style="'background-color:' + product.lensColours[index]"></div>
-            </div>
-        </div> -->
         <color-pods :frameColours="product.frameColours" :lensColours="product.lensColours" class="mt-3"></color-pods>
     </div>
     </router-link>
@@ -26,9 +17,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue'
 import resolveBrandImage from '@/mixins/resolveBrandImage'
-
 import colorPods from '@/components/colourPods.vue'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
     name:'itemCard',

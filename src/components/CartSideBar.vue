@@ -43,26 +43,10 @@ export default defineComponent({
 		},
         removeItem(itemNum: number){
             this.$store.commit('removeFromCart', itemNum)
+            if(this.$store.state.cart.length == 0 && this.$route.fullPath == "/checkout"){
+                this.$router.push('/');
+            }
         }
     }
 })
 </script>
-
-<style scoped>
-    /* CART SLIDE */
-    .cartSlide-enter-active{
-        transition: opacity 0.25 ease;
-    }
-    .cartSlide-leave-active{
-        transition: opacity 0.25 ease;
-        position: absolute
-    }
-    .cartSlide-move{
-        transition: all 0.3 ease;
-    }
-    .cartSlide-enter,
-    .cartSlide-leave-to {
-        transform: translateX(20%);
-        opacity: 0;
-    }
-</style>

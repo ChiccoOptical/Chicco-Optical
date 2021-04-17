@@ -21,16 +21,18 @@
 
 				<!-- MAIN TITLE -->
 				<h1 class="font-bold text-3xl mt-6 capitalize">{{PI.payment_method_types[0]}} Payment {{info.redirect_status == "succeeded" ? 'Successful' : 'Failed'}}</h1>
+				<h2 class="text-xl font-semibold mt-2">Amount Paid: {{format(PI.amount/100)}}</h2>
 
 				<!-- SUCCESS STATE -->
-				<div v-if="info.redirect_status == 'succeeded'" class="mt-4">
-					<h2 class="text-xl font-semibold">Amount Paid: {{format(PI.amount/100)}}</h2>
-					<h3 class="mt-10 text-2xl font-bold">Items</h3>
+				<div v-if="info.redirect_status == 'succeeded'" class="flex-2 overflow-y-auto scrollBar">
+					<h3 class="mt-4 text-2xl font-bold">Items</h3>
+					<div>
 						<div class="flex flex-row items-center justify-between bg-white rounded-md p-2 text-black mt-2" v-for="(item, i) in cart" :key="i">
 							<img :src="item.imageURL" class="h-10" alt="Glasses" >
 							<p class="font-semibold text-lg">{{item.model}}</p>
 							<p class="font-semibold">{{format(item.price ? item.price : 0)}}</p>
 						</div>
+					</div>
 				</div>
 				
 
@@ -41,7 +43,7 @@
 				</div>
 				
 				<!-- GO HOME -->
-				<div class="flex flex-col justify-end flex-1">
+				<div class="flex flex-col justify-end flex-1 mt-2">
 					<router-link to="/">
 						<div class="flex flex-row items-center justify-center gap-2">
 							<p class="text-lg font-bold">Go Home</p>
@@ -59,7 +61,8 @@
 import { loadStripe, PaymentIntent, StripeError} from '@stripe/stripe-js'
 import {defineComponent} from 'vue'
 import {infoInterface} from '@/types/stripe'
-import Product from '@/types/product'
+import getProduct from '@/mixins/getProduct'
+import Product, { ProductOrder } from '@/types/product'
 
 export default defineComponent({
 	data: () => {
@@ -71,12 +74,12 @@ export default defineComponent({
 			loaded:false
 		}
 	},
+	mixins:[getProduct],
 	async beforeMount(){
+		//==========STRIPE THINGS==========
 		const stripe = await loadStripe('pk_test_51IXE3zJY5AEAzijm3OGvmcJ3bbhltgDPtIeyncJOS5QpDoLgje1k5Yhlu4mgkBTq9frLAhheD53R0M5CdlITtb9L00rDEjM4XV');
 		if(!stripe){console.error("STRIPE LOADING ERROR");return}
 		this.info = this.$route.query as unknown as infoInterface
-		//TO SIMULATE FAILED, VERY SHALLOW
-		// this.info.redirect_status = "failed"
 
 		const {paymentIntent, error} = await stripe.retrievePaymentIntent(this.info.payment_intent_client_secret);
 		
@@ -88,10 +91,27 @@ export default defineComponent({
 			console.error("NOT SHOULD BE HERE")
 			return
 		}
-		
-		this.cart = this.$store.state.cart
-		this.$store.state.cart = []
 		this.PI = paymentIntent
+		const API = 'http://localhost:5001/chicco-optical/us-central1/payments'
+		const cartID = await(
+			await fetch(`${API}/getCart`, {
+				method:"POST",
+				body:JSON.stringify({id:paymentIntent.id}),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+		).json()
+
+		// ==========Product Things==========
+		let cart = [] as any[]
+		cartID.forEach((a:string) => {
+			const litty = JSON.parse(a) as ProductOrder
+			cart.push(this.getProductByID(litty.id, litty.productType, litty.gender))
+		});
+		this.cart = await Promise.all(cart)
+		
+		//FINISHED!
 		this.loaded = true
 	},
 	methods:{

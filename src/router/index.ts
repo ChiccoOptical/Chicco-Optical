@@ -206,6 +206,8 @@ const router = createRouter({
     }
 })
 
+
+//Some router functions
 router.beforeEach((to, from, next) => {
 	document.title = to.meta.title ? to.meta.title + " | Newstar Optical" : "Newstar Optical"
 	document.getElementById('metaDescription')?.setAttribute('content', to.meta.description as string)

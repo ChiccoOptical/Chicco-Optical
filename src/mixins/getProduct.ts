@@ -65,7 +65,7 @@ export default defineComponent({
 
 
             // ADD SOME VALUES
-            returnData.id= id
+            returnData.id = id
             returnData.productType = productType
             returnData.imageURL = await this.getImageURL(id, productType)
 

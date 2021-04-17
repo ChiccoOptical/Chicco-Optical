@@ -1,8 +1,8 @@
 <!-- ROOT FILE -->
 <template>
-	<div id="app">
+	<div id="appInner">
 		<!-- LOADER -->
-		<div class="fixed w-full h-full bg-white z-40 justify-center items-center hidden">
+		<!-- <div class="fixed w-full h-full bg-white z-40 justify-center items-center hidden">
 			<loading-progress
 				v-if="false"
 				:indeterminate="true"
@@ -11,7 +11,7 @@
 				fillDuration="2"
 				rotationDuration="1"
 			/>
-		</div>
+		</div> -->
 
 		
 		<!-- ========NAVBAR======== -->
@@ -39,26 +39,28 @@
 		<transition name="noEndfade">
 			<div id="CARTBARBACKGROUND" @click="toggleCart()" v-if="cartOpen" class="fixed bg-black w-full h-full opacity-60 z-20"></div>
 		</transition>
-		<transition name="cartSlide">
+		<transition name="cartSlide" mode="out-in">
 			<cart-bar v-if="cartOpen" id="CARTBAR" @toggle-cart="toggleCart"></cart-bar>
 		</transition>
 
 		<!-- ========CONTENT======== -->
 		<div style="min-height:calc(100vh - 256px)">
-			<transition name="fade" mode="out-in">
-				<router-view v-if="$store.state.routeLoaded" :key="$route.path"/>
-				<div v-else class="h-screen w-full bg-blue-400 flex items-center justify-center">
-					<loading-progress
-						:progress="0"
-						:indeterminate="true"
-						size="128"
-						rotate
-						fillDuration="2"
-						rotationDuration="1"
-						class="mx-auto"
-					/>
-				</div>
-			</transition>
+			<router-view v-slot="{ Component }">
+				<transition name="fade" mode="out-in">
+					<component v-if="$store.state.routeLoaded" :is="Component" />
+					<div v-else class="h-screen w-full bg-blue-400 flex items-center justify-center">
+						<loading-progress
+							:progress="0"
+							:indeterminate="true"
+							size="128"
+							rotate
+							fillDuration="2"
+							rotationDuration="1"
+							class="mx-auto"
+						/>
+					</div>
+				</transition>
+			</router-view>
 		</div>
 
 		<!-- ========FOOTER======== -->
@@ -85,7 +87,7 @@
 			'my-footer' : footer,
 			'cart-bar': CartSideBarVue
 		},
-		data: () => {
+		data: (vm) => {
 			return{
 				selectorOpen:false,
 				selectorType:"none",
@@ -118,6 +120,26 @@
 	.popDown {
 		top: 72px;
 		height: auto;
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* SELECTOR SLIDE */
+	.selectorSlide-enter-active,
+	.selectorSlide-leave-active {
+		transition-duration: .25s;
+		transition-timing-function: ease;
+		transition-property: transform, opacity;
+	}
+
+	.selectorSlide-enter-from,
+	.selectorSlide-leave-to {
+		transform: translateY(-10%);
+		opacity: 0;
+	}
+
+	.selectorSlide-enter-to,
+	.selectorSlide-leave-from{
 		opacity: 1;
 		transform: translateY(0);
 	}
